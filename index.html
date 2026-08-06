@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Primeline Product Philippines Inc. - Field Portal</title>
+  <title>Primeline Philippines Inc. - Field Portal</title>
+  
+  <!-- Page Title Logo / Favicon -->
+  <link rel="icon" type="image/png" href="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" />
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
@@ -43,8 +47,13 @@
       
       <!-- Company Branding -->
       <div class="flex items-center gap-3.5">
-        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-600 to-cyan-400 flex items-center justify-center shadow-lg shadow-brand-500/20 ring-1 ring-white/20">
-          <span class="text-xl font-black text-white tracking-wider">PPI</span>
+        <!-- Company Logo Badge -->
+        <div class="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg shadow-brand-500/10 ring-1 ring-white/20 overflow-hidden">
+          <img 
+            src="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" 
+            alt="Primeline Logo" 
+            class="w-full h-full object-contain"
+          />
         </div>
         <div>
           <h1 class="text-lg sm:text-xl font-bold text-white tracking-tight leading-tight">Primeline Product Philippines Inc.</h1>
@@ -63,7 +72,7 @@
       <p class="text-sm text-slate-400">Select a portal card below to launch the request form or system tool.</p>
     </div>
 
-    <!-- Cards Grid (4 Cards Only) -->
+    <!-- Cards Grid -->
     <section class="grid grid-cols-1 sm:grid-cols-2 gap-6">
 
       <!-- Card 1: Absent Request -->
@@ -116,7 +125,32 @@
         </div>
       </div>
 
-      <!-- Card 3: Dashboard Modal -->
+      <!-- Card 3: Funeral Assistance -->
+      <div onclick="openLink('https')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-orange-500/20 text-orange-400 flex items-center justify-center transition-colors">
+              <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-orange-500/20 group-hover:text-orange-400 transition-colors">
+              Benifits
+            </span>
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors mb-2">
+            Funeral Assistance Request
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Request financial or company-provided funeral assistance for an eligible deceased family member.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">Open Request Form</span>
+          <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+        </div>
+      </div>
+
+      <!-- Card 4: Dashboard Modal -->
       <div onclick="openDashboardModal()" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
@@ -141,7 +175,7 @@
         </div>
       </div>
 
-      <!-- Card 4: Admin Modal -->
+      <!-- Card 5: Admin Modal -->
       <div onclick="openAdminModal()" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
