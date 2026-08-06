@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Primeline Philippines Inc. - Field Portal</title>
+  <title>Primeline Product Philippines Inc. - Field Portal</title>
   
   <!-- Page Title Logo / Favicon -->
   <link rel="icon" type="image/png" href="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" />
@@ -68,143 +68,387 @@
   <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-8 justify-center">
 
     <div class="text-center sm:text-left space-y-1">
-      <h2 class="text-2xl font-bold text-white">Quick Access</h2>
-      <p class="text-sm text-slate-400">Select a portal card below to launch the request form or system tool.</p>
+      <h2 class="text-2xl font-bold text-white">Department Categories</h2>
+      <p class="text-sm text-slate-400">Select a category below to access its specific requests, tools, and portals.</p>
     </div>
 
-    <!-- Cards Grid -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+    <!-- Category Cards Grid (5 Main Categories) -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- Card 1: Absent Request -->
-      <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdJwk8ZZ4hez_K4JvRGAa36ioHOtUVPBe2Jy2hheA34DgnpdQ/viewform')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-brand-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <!-- Category 1: Operations -->
+      <div onclick="openModal('operationsModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
           <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-brand-600/20 text-brand-400 flex items-center justify-center transition-colors">
-              <i data-lucide="user-x" class="w-6 h-6"></i>
+            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-emerald-500/20 text-emerald-400 flex items-center justify-center transition-colors">
+              <i data-lucide="briefcase" class="w-6 h-6"></i>
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-brand-500/20 group-hover:text-brand-400 transition-colors">
-              Attendance
+            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-400 transition-colors">
+              Category
             </span>
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-brand-400 transition-colors mb-2">
-            Absent Request
+          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
+            Operations
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Submit a request for an absence, half-day shift, undertime departure, or late arrival.
+            Access field tools, daily operational guides, and task tracking resources.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-brand-400 transition-colors">Open Request Form</span>
-          <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-brand-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-emerald-400 transition-colors">View Modules</span>
+          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-all"></i>
         </div>
       </div>
 
-      <!-- Card 2: Change Request -->
-      <div onclick="openLink('https://forms.gle/aTVpPupSr8V23X2h6')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+      <!-- Category 2: Letters -->
+      <div onclick="openModal('lettersModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-amber-500/20 text-amber-400 flex items-center justify-center transition-colors">
-              <i data-lucide="calendar-sync" class="w-6 h-6"></i>
+              <i data-lucide="mail" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-amber-500/20 group-hover:text-amber-400 transition-colors">
-              Schedule
+              Category
             </span>
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
-            Change Request
+            Letters
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            File a request to change your scheduled day-off or swap work shifts with another team member.
+            Submit formal requests for attendance notices, absences, and schedule adjustments.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-amber-400 transition-colors">Open Request Form</span>
-          <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-amber-400 transition-colors">2 Request Forms</span>
+          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-all"></i>
         </div>
       </div>
 
-      <!-- Card 3: Funeral Assistance -->
-      <div onclick="openLink('https')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <!-- Category 3: Form -->
+      <div onclick="openModal('formsModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-purple-500/20 text-purple-400 flex items-center justify-center transition-colors">
+              <i data-lucide="file-text" class="w-6 h-6"></i>
+            </div>
+            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-purple-500/20 group-hover:text-purple-400 transition-colors">
+              Category
+            </span>
+          </div>
+          <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors mb-2">
+            Form
+          </h3>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Access general operational documents, field reports, and submission links.
+          </p>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-purple-400 transition-colors">View Forms</span>
+          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-all"></i>
+        </div>
+      </div>
+
+      <!-- Category 4: HR -->
+      <div onclick="openModal('hrModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-orange-500/20 text-orange-400 flex items-center justify-center transition-colors">
-              <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+              <i data-lucide="users" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-orange-500/20 group-hover:text-orange-400 transition-colors">
-              Benifits
+              Category
             </span>
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors mb-2">
-            Funeral Assistance Request
+            HR
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Request financial or company-provided funeral assistance for an eligible deceased family member.
+            Human resources services, employee benefits, and funeral assistance programs.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">Open Request Form</span>
-          <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">1 Benefit Option</span>
+          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 transition-all"></i>
         </div>
       </div>
 
-      <!-- Card 4: Dashboard Modal -->
-      <div onclick="openDashboardModal()" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
+      <!-- Category 5: Admin -->
+      <div onclick="openModal('adminCategoryModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
           <div class="flex items-center justify-between mb-4">
             <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-cyan-500/20 text-cyan-400 flex items-center justify-center transition-colors">
-              <i data-lucide="layout-dashboard" class="w-6 h-6"></i>
+              <i data-lucide="shield-check" class="w-6 h-6"></i>
             </div>
             <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-cyan-500/20 group-hover:text-cyan-400 transition-colors">
-              Overview
+              Category
             </span>
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
-            Dashboard
-          </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            View field performance metrics, project status updates, and daily operational summary.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-cyan-400 transition-colors">View Status</span>
-          <i data-lucide="external-link" class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all"></i>
-        </div>
-      </div>
-
-      <!-- Card 5: Admin Modal -->
-      <div onclick="openAdminModal()" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-red-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-red-500/20 text-red-400 flex items-center justify-center transition-colors">
-              <i data-lucide="shield-alert" class="w-6 h-6"></i>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-red-500/20 group-hover:text-red-400 transition-colors">
-              Restricted
-            </span>
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-red-400 transition-colors mb-2">
             Admin
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            System management controls, field staff administration, and portal configurations.
+            Performance metrics dashboard, operations overview, and restricted administrative controls.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-red-400 transition-colors">Access Controls</span>
-          <i data-lucide="lock" class="w-4 h-4 text-slate-500 group-hover:text-red-400 transition-all"></i>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-cyan-400 transition-colors">2 System Modules</span>
+          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all"></i>
         </div>
       </div>
 
     </section>
   </main>
 
-  <!-- Dashboard Modal (Ongoing Warning) -->
-  <div id="dashboardModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+
+  <!-- ================= CATEGORY MODALS ================= -->
+
+  <!-- 1. Operations Modal -->
+  <div id="operationsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl p-6 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+            <i data-lucide="briefcase" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Operations</h3>
+            <p class="text-xs text-slate-400">Field management and operational tools</p>
+          </div>
+        </div>
+        <button onclick="closeModal('operationsModal')" class="text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="text-center py-8 bg-slate-950/50 rounded-xl border border-slate-800/60">
+        <i data-lucide="clock" class="w-10 h-10 mx-auto text-emerald-400/60 mb-2"></i>
+        <h4 class="text-sm font-semibold text-white">No active modules right now</h4>
+        <p class="text-xs text-slate-400 mt-1">Operational tools and field instructions will be listed here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Letters Modal (Absent Request & Change Request) -->
+  <div id="lettersModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
+            <i data-lucide="mail" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Letters & Requests</h3>
+            <p class="text-xs text-slate-400">Select a formal request form below to fill out</p>
+          </div>
+        </div>
+        <button onclick="closeModal('lettersModal')" class="text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Card: Absent Request -->
+        <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdJwk8ZZ4hez_K4JvRGAa36ioHOtUVPBe2Jy2hheA34DgnpdQ/viewform')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-brand-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-brand-400 flex items-center justify-center">
+                <i data-lucide="user-x" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Attendance
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-brand-400 transition-colors mb-1">
+              Absent Request
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Submit request for absence, half-day, undertime, or late arrival.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-brand-400">
+            <span class="font-semibold text-[10px] uppercase">Open Form</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Card: Change Request -->
+        <div onclick="openLink('https://forms.gle/aTVpPupSr8V23X2h6')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center">
+                <i data-lucide="calendar-sync" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Schedule
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors mb-1">
+              Change Request
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              File a request to change day-off or swap shifts with a colleague.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-amber-400">
+            <span class="font-semibold text-[10px] uppercase">Open Form</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Form Modal -->
+  <div id="formsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl p-6 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">General Forms</h3>
+            <p class="text-xs text-slate-400">Standard operational forms and templates</p>
+          </div>
+        </div>
+        <button onclick="closeModal('formsModal')" class="text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="text-center py-8 bg-slate-950/50 rounded-xl border border-slate-800/60">
+        <i data-lucide="folder-open" class="w-10 h-10 mx-auto text-purple-400/60 mb-2"></i>
+        <h4 class="text-sm font-semibold text-white">No additional forms available</h4>
+        <p class="text-xs text-slate-400 mt-1">Check back later for general form links and downloads.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. HR Modal (Funeral Assistance) -->
+  <div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl p-6 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center">
+            <i data-lucide="users" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Human Resources</h3>
+            <p class="text-xs text-slate-400">Employee benefits and support services</p>
+          </div>
+        </div>
+        <button onclick="closeModal('hrModal')" class="text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4">
+        <!-- Card: Funeral Assistance -->
+        <div onclick="openLink('https')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
+                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Benefits
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
+              Funeral Assistance Request
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Request financial or company-provided funeral assistance for an eligible deceased family member.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
+            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Admin Category Modal (Dashboard & Restricted Admin) -->
+  <div id="adminCategoryModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-white">Administration & Analytics</h3>
+            <p class="text-xs text-slate-400">Select an administrative tool or view performance status</p>
+          </div>
+        </div>
+        <button onclick="closeModal('adminCategoryModal')" class="text-slate-400 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Card: Dashboard -->
+        <div onclick="openSubModal('dashboardModal')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-cyan-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-cyan-400 flex items-center justify-center">
+                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Overview
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors mb-1">
+              Dashboard
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              View field performance metrics, project status updates, and daily operational summary.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-cyan-400">
+            <span class="font-semibold text-[10px] uppercase">View Status</span>
+            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Card: Admin -->
+        <div onclick="openSubModal('adminModal')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-red-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-red-400 flex items-center justify-center">
+                <i data-lucide="shield-alert" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Restricted
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-red-400 transition-colors mb-1">
+              Admin
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              System management controls, field staff administration, and portal configurations.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-red-400">
+            <span class="font-semibold text-[10px] uppercase">Access Controls</span>
+            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= ACTION WARNING MODALS ================= -->
+
+  <!-- Dashboard Warning Modal -->
+  <div id="dashboardModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center space-y-4">
       <div class="w-14 h-14 mx-auto rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center ring-8 ring-amber-500/5">
         <i data-lucide="alert-triangle" class="w-7 h-7"></i>
@@ -221,8 +465,8 @@
     </div>
   </div>
 
-  <!-- Admin Modal (Access Denied Warning) -->
-  <div id="adminModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+  <!-- Admin Access Denied Warning Modal -->
+  <div id="adminModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center space-y-4">
       <div class="w-14 h-14 mx-auto rounded-full bg-red-500/10 text-red-400 flex items-center justify-center ring-8 ring-red-500/5">
         <i data-lucide="lock" class="w-7 h-7"></i>
@@ -245,7 +489,7 @@
   </footer>
 
   <script>
-    // Initialize icons
+    // Initialize Lucide icons
     lucide.createIcons();
 
     // Open link in a new tab
@@ -254,12 +498,13 @@
     }
 
     // Modal Control Functions
-    function openDashboardModal() {
-      document.getElementById('dashboardModal').classList.remove('hidden');
+    function openModal(modalId) {
+      document.getElementById(modalId).classList.remove('hidden');
     }
 
-    function openAdminModal() {
-      document.getElementById('adminModal').classList.remove('hidden');
+    function openSubModal(subModalId) {
+      // Keep category modal smooth while opening the prompt window
+      openModal(subModalId);
     }
 
     function closeModal(modalId) {
