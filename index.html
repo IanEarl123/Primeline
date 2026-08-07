@@ -6,7 +6,7 @@
   <title>Primeline Product Philippines Inc. - Field Portal</title>
   
   <!-- Page Title Logo / Favicon -->
-  <link rel="icon" type="image/png" href="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" />
+  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6cw0HANn4KFpy9KdVgQFp6wywQiiR933A_GHaSG4J1ylpriB8oiB2G7B-&s=10" />
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -166,11 +166,11 @@
             HR Form
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Human resources services,funeral assistance, COE, and assistance programs.
+            Human resources services, funeral assistance, COE, YSDC, and assistance programs.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">2 HR Forms</span>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">3 HR Forms</span>
           <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 transition-all"></i>
         </div>
       </div>
@@ -328,9 +328,9 @@
     </div>
   </div>
 
-  <!-- 4. HR Modal (COE Request & Funeral Assistance) -->
+  <!-- 4. HR Modal (COE, Funeral Assistance & YSDC Request) -->
   <div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl p-6 shadow-2xl space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center">
@@ -346,8 +346,8 @@
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Card: COE Request Form -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Card 1: COE Request Form -->
         <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdApX0S-nhNzvD8-pd8MdYC9C0m1xG5lczAxBEApKcgbchYRQ/viewform')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -371,7 +371,7 @@
           </div>
         </div>
 
-        <!-- Card: Funeral Assistance -->
+        <!-- Card 2: Funeral Assistance -->
         <div onclick="openLink('https://forms.gle/vsoYJ1UMALYCX1tv8')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -387,6 +387,30 @@
             </h4>
             <p class="text-xs text-slate-400 leading-relaxed">
               Request financial or company-provided funeral assistance for an eligible deceased family member.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
+            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
+        <!-- Card 3: YSDC Request Form -->
+        <div onclick="openLink('https://forms.gle/ghWAzdv3ZbgMC7k68')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Perks
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
+              YSDC Request Form
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Request Years of Service Discount Certificates for eligible tenure discounts.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
@@ -518,10 +542,10 @@
 
     // Open link in a new tab
     function openLink(url) {
-      if (url && url !== 'YOUR_COE_FORM_LINK_HERE') {
+      if (url && url !== 'YOUR_COE_FORM_LINK_HERE' && url !== 'YOUR_YSDC_FORM_LINK_HERE') {
         window.open(url, '_blank', 'noopener,noreferrer');
       } else {
-        alert('Please update the link for the COE Request Form in the HTML source.');
+        alert('Please update the form link in the HTML source before proceeding.');
       }
     }
 
