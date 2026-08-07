@@ -37,9 +37,71 @@
     .card-hover:hover {
       transform: translateY(-4px);
     }
+
+    /* Aesthetic Download Button & Card Animation */
+    .dl-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .dl-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.2);
+    }
+    .dl-card:hover .dl-icon {
+      transform: translateY(3px);
+      color: #c084fc;
+    }
+    .dl-card:active {
+      transform: scale(0.98);
+    }
+    .dl-icon {
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    /* Toast Notification Animation */
+    @keyframes toastIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes toastOut {
+      0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+      }
+    }
+
+    @keyframes progress {
+      0% { width: 100%; }
+      100% { width: 0%; }
+    }
+
+    .toast-animate-in {
+      animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .toast-animate-out {
+      animation: toastOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .progress-bar {
+      animation: progress 3.5s linear forwards;
+    }
   </style>
 </head>
-<body class="min-h-full flex flex-col bg-slate-950 font-sans antialiased text-slate-200 selection:bg-brand-500 selection:text-white">
+<body class="min-h-full flex flex-col bg-slate-950 font-sans antialiased text-slate-200 selection:bg-brand-500 selection:text-white relative">
+
+  <!-- Toast Notification Container (Top-Right Floating) -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
   <!-- Header / Navigation -->
   <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md">
@@ -69,38 +131,13 @@
 
     <div class="text-center sm:text-left space-y-1">
       <h2 class="text-2xl font-bold text-white">Department Categories</h2>
-      <p class="text-sm text-slate-400">Select a category below to access its specific requests, tools, and portals.</p>
+      <p class="text-sm text-slate-400">Select a category below to access its specific requests, forms, and tools.</p>
     </div>
 
-    <!-- Category Cards Grid (5 Main Categories) -->
+    <!-- Category Cards Grid (3 Main Categories) -->
     <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-      <!-- Category 1: Operations -->
-      <div onclick="openModal('operationsModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-emerald-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-emerald-500/20 text-emerald-400 flex items-center justify-center transition-colors">
-              <i data-lucide="briefcase" class="w-6 h-6"></i>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-emerald-500/20 group-hover:text-emerald-400 transition-colors">
-              Category
-            </span>
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors mb-2">
-            Operations
-          </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Access field tools, daily operational guides, and task tracking resources.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-emerald-400 transition-colors">View Modules</span>
-          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-emerald-400 transition-all"></i>
-        </div>
-      </div>
-
-      <!-- Category 2: Letters -->
+      <!-- Category 1: Letters -->
       <div onclick="openModal('lettersModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
@@ -116,7 +153,7 @@
             Sales Request Letters
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Submit formal requests for back to work, absences, undertime, and late request.
+            Submit formal requests for required store counters.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
@@ -125,7 +162,7 @@
         </div>
       </div>
 
-      <!-- Category 3: Form -->
+      <!-- Category 2: Forms & Documents -->
       <div onclick="openModal('formsModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
@@ -138,19 +175,19 @@
             </span>
           </div>
           <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors mb-2">
-            Form
+            Forms & Downloads
           </h3>
           <p class="text-xs text-slate-400 leading-relaxed">
-            Access general operational documents, field reports, and submission links.
+            Download printable PDF forms for Cash Advance, SSS notifications, OB history, and medical certificates.
           </p>
         </div>
         <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-purple-400 transition-colors">View Forms</span>
+          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-purple-400 transition-colors">6 PDF Documents</span>
           <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-all"></i>
         </div>
       </div>
 
-      <!-- Category 4: HR -->
+      <!-- Category 3: HR -->
       <div onclick="openModal('hrModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
@@ -175,64 +212,13 @@
         </div>
       </div>
 
-      <!-- Category 5: Admin -->
-      <div onclick="openModal('adminCategoryModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-cyan-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-cyan-500/20 text-cyan-400 flex items-center justify-center transition-colors">
-              <i data-lucide="shield-check" class="w-6 h-6"></i>
-            </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-cyan-500/20 group-hover:text-cyan-400 transition-colors">
-              Category
-            </span>
-          </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors mb-2">
-            Admin
-          </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
-            Performance metrics dashboard, operations overview, and restricted administrative controls.
-          </p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-cyan-400 transition-colors">2 System Modules</span>
-          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-all"></i>
-        </div>
-      </div>
-
     </section>
   </main>
 
 
   <!-- ================= CATEGORY MODALS ================= -->
 
-  <!-- 1. Operations Modal -->
-  <div id="operationsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl p-6 shadow-2xl space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-            <i data-lucide="briefcase" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-white">Operations</h3>
-            <p class="text-xs text-slate-400">Field management and operational tools</p>
-          </div>
-        </div>
-        <button onclick="closeModal('operationsModal')" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="text-center py-8 bg-slate-950/50 rounded-xl border border-slate-800/60">
-        <i data-lucide="clock" class="w-10 h-10 mx-auto text-emerald-400/60 mb-2"></i>
-        <h4 class="text-sm font-semibold text-white">No active modules right now</h4>
-        <p class="text-xs text-slate-400 mt-1">Operational tools and field instructions will be listed here.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Letters Modal (Absent Request & Change Request) -->
+  <!-- 1. Letters Modal -->
   <div id="lettersModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
@@ -266,7 +252,7 @@
               Absent Request
             </h4>
             <p class="text-xs text-slate-400 leading-relaxed">
-              Submit request for absence, half-day, undertime, or late arrival.
+              Submit request for back to work, vacation leave, sick leave, emergency leave, half day, undertime or late letter.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-brand-400">
@@ -290,7 +276,7 @@
               Change Request
             </h4>
             <p class="text-xs text-slate-400 leading-relaxed">
-              File a request to change day-off or swap shifts with a colleague.
+              Submit request for change day-off or schedule.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-amber-400">
@@ -302,17 +288,17 @@
     </div>
   </div>
 
-  <!-- 3. Form Modal -->
+  <!-- 2. Form & PDF Downloads Modal -->
   <div id="formsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl p-6 shadow-2xl space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl p-6 shadow-2xl space-y-6 max-h-[85vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4 sticky top-0 bg-slate-900 z-10">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
             <i data-lucide="file-text" class="w-5 h-5"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-white">General Forms</h3>
-            <p class="text-xs text-slate-400">Standard operational forms and templates</p>
+            <h3 class="text-lg font-bold text-white">Forms & PDF Downloads</h3>
+            <p class="text-xs text-slate-400">Download official PDF templates for company requests & SSS filings</p>
           </div>
         </div>
         <button onclick="closeModal('formsModal')" class="text-slate-400 hover:text-white transition-colors">
@@ -320,15 +306,159 @@
         </button>
       </div>
 
-      <div class="text-center py-8 bg-slate-950/50 rounded-xl border border-slate-800/60">
-        <i data-lucide="folder-open" class="w-10 h-10 mx-auto text-purple-400/60 mb-2"></i>
-        <h4 class="text-sm font-semibold text-white">No additional forms available</h4>
-        <p class="text-xs text-slate-400 mt-1">Check back later for general form links and downloads.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
+        <!-- PDF Form: Cash Advance Blank Form -->
+        <a href="CA Blank Form.pdf" download="CA Blank Form.pdf" onclick="triggerToast('Cash Advance Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between relative overflow-hidden">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="banknote" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              Cash Advance Form
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Official Cash Advance Request & Authorization Form for salary deduction.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download PDF</span>
+            <div class="flex items-center gap-1">
+              <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+            </div>
+          </div>
+        </a>
+
+        <!-- PDF Form 1 -->
+        <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              Maternity Notification
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              SSS Maternity Notification Form (SIC-01841) for employed members.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
+        <!-- PDF Form 2 -->
+        <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerToast('OB History Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              OB History Form
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Complete Obstetrical History Form to be accomplished by attending OB-GYNE.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
+        <!-- PDF Form 3 -->
+        <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerToast('Sickness Medical Certificate')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              Sickness Medical Certificate
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              SSS Medical Certificate (MED-01688) to be filled out by attending physician.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
+        <!-- PDF Form 4 -->
+        <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerToast('Sickness Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              Sickness Notification
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              SSS Sickness Notification Form (SIC-01252) for medical benefit filing.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
+        <!-- PDF Form 5 -->
+        <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              EC Accident / Sickness Report
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              SSS Form B-309 for filing employee workplace accident or illness reports.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
       </div>
     </div>
   </div>
 
-  <!-- 4. HR Modal (COE, Funeral Assistance & YSDC Request) -->
+  <!-- 3. HR Modal -->
   <div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl p-6 shadow-2xl space-y-6">
       <div class="flex items-center justify-between border-b border-slate-800 pb-4">
@@ -422,115 +552,6 @@
     </div>
   </div>
 
-  <!-- 5. Admin Category Modal (Dashboard & Restricted Admin) -->
-  <div id="adminCategoryModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-            <i data-lucide="shield-check" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-white">Administration & Analytics</h3>
-            <p class="text-xs text-slate-400">Select an administrative tool or view performance status</p>
-          </div>
-        </div>
-        <button onclick="closeModal('adminCategoryModal')" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <!-- Card: Dashboard -->
-        <div onclick="openSubModal('dashboardModal')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-cyan-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-cyan-400 flex items-center justify-center">
-                <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
-              </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Overview
-              </span>
-            </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-cyan-400 transition-colors mb-1">
-              Dashboard
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              View field performance metrics, project status updates, and daily operational summary.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-cyan-400">
-            <span class="font-semibold text-[10px] uppercase">View Status</span>
-            <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
-
-        <!-- Card: Admin -->
-        <div onclick="openSubModal('adminModal')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-red-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-red-400 flex items-center justify-center">
-                <i data-lucide="shield-alert" class="w-5 h-5"></i>
-              </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Restricted
-              </span>
-            </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-red-400 transition-colors mb-1">
-              Admin
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              System management controls, field staff administration, and portal configurations.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-red-400">
-            <span class="font-semibold text-[10px] uppercase">Access Controls</span>
-            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ================= ACTION WARNING MODALS ================= -->
-
-  <!-- Dashboard Warning Modal -->
-  <div id="dashboardModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center space-y-4">
-      <div class="w-14 h-14 mx-auto rounded-full bg-amber-500/10 text-amber-400 flex items-center justify-center ring-8 ring-amber-500/5">
-        <i data-lucide="alert-triangle" class="w-7 h-7"></i>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold text-white mb-1">Ongoing Development</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          The Dashboard feature is currently undergoing maintenance and updates. Please check back later.
-        </p>
-      </div>
-      <button onclick="closeModal('dashboardModal')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2.5 rounded-xl text-sm transition-all">
-        Understand & Close
-      </button>
-    </div>
-  </div>
-
-  <!-- Admin Access Denied Warning Modal -->
-  <div id="adminModal" class="fixed inset-0 z-[60] bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-6 shadow-2xl text-center space-y-4">
-      <div class="w-14 h-14 mx-auto rounded-full bg-red-500/10 text-red-400 flex items-center justify-center ring-8 ring-red-500/5">
-        <i data-lucide="lock" class="w-7 h-7"></i>
-      </div>
-      <div>
-        <h3 class="text-xl font-bold text-white mb-1">Access Denied</h3>
-        <p class="text-xs text-slate-400 leading-relaxed">
-          You don't have access to this module. Please contact your supervisor if you require administrative credentials.
-        </p>
-      </div>
-      <button onclick="closeModal('adminModal')" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2.5 rounded-xl text-sm transition-all">
-        Close Window
-      </button>
-    </div>
-  </div>
-
   <!-- Footer -->
   <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
     <p>&copy; 2026 Primeline Philippines Inc. All rights reserved.</p>
@@ -554,13 +575,50 @@
       document.getElementById(modalId).classList.remove('hidden');
     }
 
-    function openSubModal(subModalId) {
-      // Keep category modal smooth while opening the prompt window
-      openModal(subModalId);
-    }
-
     function closeModal(modalId) {
       document.getElementById(modalId).classList.add('hidden');
+    }
+
+    // Dynamic Toast Notification Trigger
+    function triggerToast(docName) {
+      const container = document.getElementById('toastContainer');
+
+      // Create Toast Element
+      const toast = document.createElement('div');
+      toast.className = 'toast-animate-in pointer-events-auto bg-slate-900/95 border border-purple-500/30 text-white p-4 rounded-xl shadow-2xl shadow-purple-950/50 backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-white/10';
+
+      toast.innerHTML = `
+        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-emerald-500/30">
+          <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-white leading-tight">Download Started</h5>
+          <p class="text-[11px] text-slate-400 truncate mt-0.5">${docName}</p>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-500 hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-800">
+          <div class="progress-bar h-full bg-gradient-to-r from-purple-500 to-emerald-400"></div>
+        </div>
+      `;
+
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      // Auto dismiss after 3.5s
+      setTimeout(() => {
+        dismissToast(toast);
+      }, 3500);
+    }
+
+    function dismissToast(toastElement) {
+      if (!toastElement || toastElement.classList.contains('toast-animate-out')) return;
+      toastElement.classList.remove('toast-animate-in');
+      toastElement.classList.add('toast-animate-out');
+      setTimeout(() => {
+        toastElement.remove();
+      }, 300);
     }
   </script>
 </body>
