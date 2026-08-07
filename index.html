@@ -335,6 +335,30 @@
         </a>
 
         <!-- PDF Form 1 -->
+        <a href="PAG-IBIG LOAN FORM 2025.pdf" download="PAG-IBIG LOAN FORM 2025.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                PDF
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+              Pag-Ibig Form Loan
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Official Pag-IBIG Loan Application Form for qualified members applying for financial assistance and loan benefits.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
+            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
+          </div>
+        </a>
+
+        <!-- PDF Form 2 -->
         <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -358,7 +382,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 2 -->
+        <!-- PDF Form 3 -->
         <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerToast('OB History Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -382,7 +406,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 3 -->
+        <!-- PDF Form 4 -->
         <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerToast('Sickness Medical Certificate')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -406,7 +430,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 4 -->
+        <!-- PDF Form 5 -->
         <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerToast('Sickness Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -430,7 +454,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 5 -->
+        <!-- PDF Form 6 -->
         <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -454,7 +478,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 6 -->
+        <!-- PDF Form 7 -->
         <a href="Incident Report Form.pdf" download="Incident Report Form.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-3">
@@ -483,24 +507,31 @@
   </div>
 
   <!-- 3. HR Modal -->
-  <div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl p-6 shadow-2xl space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center">
-            <i data-lucide="users" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="text-lg font-bold text-white">Human Resources</h3>
-            <p class="text-xs text-slate-400"> Access employee support services, benefits, and HR document requests.</p>
-          </div>
+<div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 hidden">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl shadow-2xl flex flex-col max-h-[88vh] sm:max-h-[85vh] overflow-hidden">
+    
+    <!-- Modal Header (Fixed & Sticky for Mobile) -->
+    <div class="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 p-4 sm:p-6 flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-3 pr-2">
+        <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0">
+          <i data-lucide="users" class="w-5 h-5"></i>
         </div>
-        <button onclick="closeModal('hrModal')" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-white leading-tight">Human Resources</h3>
+          <p class="text-[11px] sm:text-xs text-slate-400 line-clamp-1 sm:line-clamp-none">Access employee support services, benefits, and HR document requests.</p>
+        </div>
       </div>
+      
+      <!-- Close Button (Optimized for Mobile Touch) -->
+      <button onclick="closeModal('hrModal')" aria-label="Close Modal" class="text-slate-400 hover:text-white hover:bg-slate-800 p-2 -mr-2 rounded-lg transition-colors shrink-0">
+        <i data-lucide="x" class="w-6 h-6 sm:w-5 sm:h-5"></i>
+      </button>
+    </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+    <!-- Modal Content Grid (Scrollable) -->
+    <div class="p-4 sm:p-6 overflow-y-auto space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        
         <!-- Card 1: COE Request Form -->
         <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdApX0S-nhNzvD8-pd8MdYC9C0m1xG5lczAxBEApKcgbchYRQ/viewform')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
           <div>
@@ -572,9 +603,35 @@
             <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
           </div>
         </div>
+
+        <!-- Card 4: ID Requisition -->
+        <div onclick="openLink('https://forms.gle/fyxXAQoTPTtXpLi67')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
+                <i data-lucide="id-card" class="w-5 h-5"></i>
+              </div>
+              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+                Service
+              </span>
+            </div>
+            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
+              ID Request Form
+            </h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Request a company identification card (ID) for issuance, replacement, or employee information updates.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
+            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
+            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
+</div>
 
   <!-- Footer -->
   <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
