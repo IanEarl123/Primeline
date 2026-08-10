@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<html lang="en" class="h-full dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,18 +12,21 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
             brand: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              500: '#0284c7',
-              600: '#0369a1',
-              700: '#075985',
-              900: '#0c4a6e',
+              50: '#eff6ff',
+              100: '#dbeafe',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
             }
           }
         }
@@ -32,10 +35,10 @@
   </script>
   <style>
     .card-hover {
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-hover:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px) scale(1.01);
     }
 
     /* Aesthetic Download Button & Card Animation */
@@ -43,11 +46,11 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .dl-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px -5px rgba(168, 85, 247, 0.25);
     }
     .dl-card:hover .dl-icon {
-      transform: translateY(3px);
+      transform: translateY(4px);
       color: #c084fc;
     }
     .dl-card:active {
@@ -98,19 +101,19 @@
     }
   </style>
 </head>
-<body class="min-h-full flex flex-col bg-slate-950 font-sans antialiased text-slate-200 selection:bg-brand-500 selection:text-white relative">
+<body class="min-h-full flex flex-col bg-slate-100 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white relative transition-colors duration-300">
 
   <!-- Toast Notification Container (Top-Right Floating) -->
   <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
   <!-- Header / Navigation -->
-  <header class="sticky top-0 z-40 border-b border-slate-800/80 bg-slate-900/90 backdrop-blur-md">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <header class="sticky top-0 z-40 border-b border-slate-200/80 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
       
       <!-- Company Branding -->
-      <div class="flex items-center gap-3.5">
+      <div class="flex items-center gap-4">
         <!-- Company Logo Badge -->
-        <div class="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center shadow-lg shadow-brand-500/10 ring-1 ring-white/20 overflow-hidden">
+        <div class="w-14 h-14 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-lg shadow-brand-500/10 ring-1 ring-slate-200 dark:ring-white/20 overflow-hidden">
           <img 
             src="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" 
             alt="Primeline Logo" 
@@ -118,97 +121,103 @@
           />
         </div>
         <div>
-          <h1 class="text-lg sm:text-xl font-bold text-white tracking-tight leading-tight">Primeline Products Philippines, Inc.</h1>
-          <p class="text-xs text-brand-400 font-semibold tracking-wide uppercase">HR Service Portal</p>
+          <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">HR Service Portal</h1>
+          <p class="text-xs sm:text-sm text-brand-600 dark:text-brand-400 font-bold tracking-wider uppercase">Primeline Products Philippines, Inc.</p>
         </div>
       </div>
+
+      <!-- Theme Switcher Toggle -->
+      <button id="themeToggle" onclick="toggleTheme()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors font-medium text-sm shadow-sm">
+        <i id="themeIcon" data-lucide="sun" class="w-5 h-5 text-amber-500"></i>
+        <span id="themeLabel" class="hidden sm:inline">Light Mode</span>
+      </button>
 
     </div>
   </header>
 
   <!-- Main Content Area -->
-  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 flex flex-col gap-8 justify-center">
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10 justify-center">
 
-    <div class="text-center sm:text-left space-y-1">
-      <h2 class="text-2xl font-bold text-white">Service Categories</h2>
-      <p class="text-sm text-slate-400">Select a category below to access the corresponding requests, forms, documents, and self-service tools.</p>
+    <div class="text-center sm:text-left space-y-2">
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Service Categories</h2>
+      <p class="text-base text-slate-600 dark:text-slate-400">Select a category below to access the corresponding requests, forms, documents, and self-service tools.</p>
     </div>
 
     <!-- Category Cards Grid (3 Main Categories) -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
       <!-- Category 1: Letters -->
-      <div onclick="openModal('lettersModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-amber-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div onclick="openModal('lettersModal')" class="card-hover group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-amber-500/80 dark:hover:border-amber-500/80 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-xl shadow-slate-200/50 dark:shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-amber-500/20 text-amber-400 flex items-center justify-center transition-colors">
-              <i data-lucide="mail" class="w-6 h-6"></i>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-colors group-hover:bg-amber-500/20 group-hover:scale-110">
+              <i data-lucide="mail" class="w-8 h-8"></i>
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-amber-500/20 group-hover:text-amber-400 transition-colors">
+            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-amber-100 dark:bg-slate-800 text-amber-700 dark:text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-colors">
               REQUEST
             </span>
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-3">
             Sales Request Letters
           </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             Submit official request letters for store-related requirements and operational needs.
           </p>
         </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-amber-400 transition-colors">2 Request Forms</span>
-          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-amber-400 transition-all"></i>
+        <div class="mt-8 pt-5 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200">
+          <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">2 Request Forms</span>
+          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all"></i>
         </div>
       </div>
 
       <!-- Category 2: Forms & Documents -->
-      <div onclick="openModal('formsModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-purple-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div onclick="openModal('formsModal')" class="card-hover group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 dark:hover:border-purple-500/80 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-xl shadow-slate-200/50 dark:shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-purple-500/20 text-purple-400 flex items-center justify-center transition-colors">
-              <i data-lucide="file-text" class="w-6 h-6"></i>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-colors group-hover:bg-purple-500/20 group-hover:scale-110">
+              <i data-lucide="file-text" class="w-8 h-8"></i>
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-purple-500/20 group-hover:text-purple-400 transition-colors">
+            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-purple-100 dark:bg-slate-800 text-purple-700 dark:text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-colors">
               RESOURCES
             </span>
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-purple-400 transition-colors mb-2">
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-3">
             Forms & Downloads
           </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             Access and download printable Human Resources and government benefit forms in PDF format.
           </p>
         </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-purple-400 transition-colors">6 PDF Documents</span>
-          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-purple-400 transition-all"></i>
+        <div class="mt-8 pt-5 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200">
+          <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">8 PDF Documents</span>
+          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-all"></i>
         </div>
       </div>
 
       <!-- Category 3: HR -->
-      <div onclick="openModal('hrModal')" class="card-hover group relative bg-slate-900 border border-slate-800 hover:border-orange-500/50 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-xl shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+      <div onclick="openModal('hrModal')" class="card-hover group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-orange-500/80 dark:hover:border-orange-500/80 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-xl shadow-slate-200/50 dark:shadow-black/40 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/10 via-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
         <div>
-          <div class="flex items-center justify-between mb-4">
-            <div class="w-12 h-12 rounded-xl bg-slate-800 group-hover:bg-orange-500/20 text-orange-400 flex items-center justify-center transition-colors">
-              <i data-lucide="users" class="w-6 h-6"></i>
+          <div class="flex items-center justify-between mb-6">
+            <div class="w-16 h-16 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center transition-colors group-hover:bg-orange-500/20 group-hover:scale-110">
+              <i data-lucide="users" class="w-8 h-8"></i>
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-800 text-slate-400 group-hover:bg-orange-500/20 group-hover:text-orange-400 transition-colors">
+            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-orange-100 dark:bg-slate-800 text-orange-700 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-colors">
               EMPLOYEE SERVICES
             </span>
           </div>
-          <h3 class="text-lg font-bold text-white group-hover:text-orange-400 transition-colors mb-2">
+          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-3">
             HR Compensation & Benefits
           </h3>
-          <p class="text-xs text-slate-400 leading-relaxed">
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
             Request HR services related to compensation, employee benefits, certificates, assistance programs, and other HR support.
           </p>
         </div>
-        <div class="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400 group-hover:text-slate-200">
-          <span class="font-semibold text-[11px] uppercase tracking-wider text-slate-500 group-hover:text-orange-400 transition-colors">3 HR Forms</span>
-          <i data-lucide="layers" class="w-4 h-4 text-slate-500 group-hover:text-orange-400 transition-all"></i>
+        <div class="mt-8 pt-5 border-t border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500 group-hover:text-slate-900 dark:group-hover:text-slate-200">
+          <span class="font-bold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">4 HR Forms</span>
+          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-all"></i>
         </div>
       </div>
 
@@ -219,69 +228,69 @@
   <!-- ================= CATEGORY MODALS ================= -->
 
   <!-- 1. Letters Modal -->
-  <div id="lettersModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-6">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center">
-            <i data-lucide="mail" class="w-5 h-5"></i>
+  <div id="lettersModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-3xl p-8 shadow-2xl space-y-8">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <i data-lucide="mail" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-white">Letters & Requests</h3>
-            <p class="text-xs text-slate-400">Select a request form below to submit your letter or request.</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Letters & Requests</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Select a request form below to submit your letter or request.</p>
           </div>
         </div>
-        <button onclick="closeModal('lettersModal')" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button onclick="closeModal('lettersModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <!-- Card: Absent Request -->
-        <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdJwk8ZZ4hez_K4JvRGAa36ioHOtUVPBe2Jy2hheA34DgnpdQ/viewform')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-brand-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+        <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdJwk8ZZ4hez_K4JvRGAa36ioHOtUVPBe2Jy2hheA34DgnpdQ/viewform')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-brand-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-brand-400 flex items-center justify-center">
-                <i data-lucide="user-x" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                <i data-lucide="user-x" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                 Attendance
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-brand-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors mb-2">
               Attendance Request
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
                Submit requests related to absences, return-to-work, vacation leave, sick leave, emergency leave, half-day leave, undertime, or late attendance.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-brand-400">
-            <span class="font-semibold text-[10px] uppercase">Open Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-brand-600 dark:group-hover:text-brand-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Open Form</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
           </div>
         </div>
 
         <!-- Card: Change Request -->
-        <div onclick="openLink('https://forms.gle/aTVpPupSr8V23X2h6')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-amber-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
+        <div onclick="openLink('https://forms.gle/aTVpPupSr8V23X2h6')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-amber-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-amber-400 flex items-center justify-center">
-                <i data-lucide="calendar-sync" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                <i data-lucide="calendar-sync" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
                 Schedule
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-2">
               Schedule Change Request
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Submit a request to change your work schedule or designated day off.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-amber-400">
-            <span class="font-semibold text-[10px] uppercase">Open Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-amber-600 dark:group-hover:text-amber-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Open Form</span>
+            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
           </div>
         </div>
       </div>
@@ -289,215 +298,213 @@
   </div>
 
   <!-- 2. Form & PDF Downloads Modal -->
-  <div id="formsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl p-6 shadow-2xl space-y-6 max-h-[85vh] overflow-y-auto">
-      <div class="flex items-center justify-between border-b border-slate-800 pb-4 sticky top-0 bg-slate-900 z-10">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center">
-            <i data-lucide="file-text" class="w-5 h-5"></i>
+  <div id="formsModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-4xl p-8 shadow-2xl space-y-8 max-h-[88vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5 sticky top-0 bg-white dark:bg-slate-900 z-10">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <i data-lucide="file-text" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="text-lg font-bold text-white">Forms & PDF Downloads</h3>
-            <p class="text-xs text-slate-400">Download official company and government forms for HR requests, benefits, and SSS filings.</p>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Forms & PDF Downloads</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Download official company and government forms for HR requests, benefits, and SSS filings.</p>
           </div>
         </div>
-        <button onclick="closeModal('formsModal')" class="text-slate-400 hover:text-white transition-colors">
-          <i data-lucide="x" class="w-5 h-5"></i>
+        <button onclick="closeModal('formsModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         
         <!-- PDF Form: Cash Advance Blank Form -->
-        <a href="CA Blank Form.pdf" download="CA Blank Form.pdf" onclick="triggerToast('Cash Advance Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between relative overflow-hidden">
+        <a href="CA Blank Form.pdf" download="CA Blank Form.pdf" onclick="triggerToast('Cash Advance Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="banknote" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="banknote" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               Cash Advance Form
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Official Cash Advance Request and Authorization Form for salary deduction.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download PDF</span>
-            <div class="flex items-center gap-1">
-              <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
-            </div>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download PDF</span>
+            <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 1 -->
-        <a href="PAG-IBIG LOAN FORM 2025.pdf" download="PAG-IBIG LOAN FORM 2025.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="PAG-IBIG LOAN FORM 2025.pdf" download="PAG-IBIG LOAN FORM 2025.pdf" onclick="triggerToast('MPLAF PAG-IBIG FORM')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               MPLAF PAG-IBIG FORM
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Official Pag-IBIG Loan Application Form for qualified members applying for salary and housing loan benefits.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 2 -->
-        <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               Maternity Notification
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               SSS Maternity Notification Form (MAT-1) for employed members filing maternity benefits.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 3 -->
-        <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerToast('OB History Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerToast('OB History Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               OB History Form
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Obstetrical History Form to be completed by the attending OB-GYN as part of the maternity benefit requirements.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 4 -->
-        <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerToast('Sickness Medical Certificate')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerToast('Sickness Medical Certificate')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               Sickness Medical Certificate
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               SSS Medical Certificate to be completed by the attending physician for sickness benefit claims.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 5 -->
-        <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerToast('Sickness Notification Form')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerToast('Sickness Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               Sickness Notification
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               SSS Sickness Notification Form for employees filing sickness benefit claims.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 6 -->
-        <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               EC Accident / Sickness Report
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               SSS Employees' Compensation (EC) Accident or Sickness Report for work-related injuries or illnesses.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
 
         <!-- PDF Form 7 -->
-        <a href="Incident Report Form.pdf" download="Incident Report Form.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-950 border border-slate-800 hover:border-purple-500/50 rounded-xl p-5 flex flex-col justify-between">
+        <a href="Incident Report Form.pdf" download="Incident Report Form.pdf" onclick="triggerToast('Incident Report Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-purple-500/80 rounded-2xl p-6 flex flex-col justify-between shadow-sm">
           <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
-                <i data-lucide="file-down" class="w-5 h-5"></i>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                <i data-lucide="file-down" class="w-6 h-6"></i>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-purple-100 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-200 dark:border-purple-500/20">
                 PDF
               </span>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition-colors mb-1">
+            <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-2">
               Incident Report Form
             </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Report workplace incidents, accidents, injuries, or safety concerns for proper documentation and investigation.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-400">
-            <span class="font-semibold text-[10px] uppercase tracking-wider">Download Form</span>
+          <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400">
+            <span class="font-bold uppercase tracking-wider text-[11px]">Download Form</span>
             <i data-lucide="download" class="w-4 h-4 dl-icon"></i>
           </div>
         </a>
@@ -507,140 +514,159 @@
   </div>
 
   <!-- 3. HR Modal -->
-<div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 hidden">
-  <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-3xl shadow-2xl flex flex-col max-h-[88vh] sm:max-h-[85vh] overflow-hidden">
-    
-    <!-- Modal Header (Fixed & Sticky for Mobile) -->
-    <div class="sticky top-0 z-20 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 p-4 sm:p-6 flex items-center justify-between shrink-0">
-      <div class="flex items-center gap-3 pr-2">
-        <div class="w-10 h-10 rounded-lg bg-orange-500/10 text-orange-400 flex items-center justify-center shrink-0">
-          <i data-lucide="users" class="w-5 h-5"></i>
-        </div>
-        <div>
-          <h3 class="text-base sm:text-lg font-bold text-white leading-tight">Human Resources</h3>
-          <p class="text-[11px] sm:text-xs text-slate-400 line-clamp-1 sm:line-clamp-none">Access employee support services, benefits, and HR document requests.</p>
-        </div>
-      </div>
+  <div id="hrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 hidden">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-4xl shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
       
-      <!-- Close Button (Optimized for Mobile Touch) -->
-      <button onclick="closeModal('hrModal')" aria-label="Close Modal" class="text-slate-400 hover:text-white hover:bg-slate-800 p-2 -mr-2 rounded-lg transition-colors shrink-0">
-        <i data-lucide="x" class="w-6 h-6 sm:w-5 sm:h-5"></i>
-      </button>
-    </div>
-
-    <!-- Modal Content Grid (Scrollable) -->
-    <div class="p-4 sm:p-6 overflow-y-auto space-y-4">
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Modal Header -->
+      <div class="sticky top-0 z-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-6 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-4 pr-2">
+          <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white leading-tight">Human Resources</h3>
+            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Access employee support services, benefits, and HR document requests.</p>
+          </div>
+        </div>
         
-        <!-- Card 1: COE Request Form -->
-        <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdApX0S-nhNzvD8-pd8MdYC9C0m1xG5lczAxBEApKcgbchYRQ/viewform')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
-                <i data-lucide="file-badge" class="w-5 h-5"></i>
-              </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Documents
-              </span>
-            </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
-              Certificate of Employment (COE) Request
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Request an official Certificate of Employment (COE), with or without compensation details.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
-            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
+        <button onclick="closeModal('hrModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
 
-        <!-- Card 2: Funeral Assistance -->
-        <div onclick="openLink('https://forms.gle/vsoYJ1UMALYCX1tv8')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
-                <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+      <!-- Modal Content Grid (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          
+          <!-- Card 1: COE Request Form -->
+          <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdApX0S-nhNzvD8-pd8MdYC9C0m1xG5lczAxBEApKcgbchYRQ/viewform')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                  <i data-lucide="file-badge" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                  Documents
+                </span>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Benefits
-              </span>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-2">
+                Certificate of Employment (COE) Request
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                Request an official Certificate of Employment (COE), with or without compensation details.
+              </p>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
-              Funeral Assistance Request
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Request company funeral assistance for an eligible deceased immediate family member, subject to company policy.
-            </p>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+              <span class="font-bold uppercase tracking-wider text-[11px]">Open Request Form</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
-            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
 
-        <!-- Card 3: YSDC Request Form -->
-        <div onclick="openLink('https://forms.gle/ghWAzdv3ZbgMC7k68')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
-                <i data-lucide="award" class="w-5 h-5"></i>
+          <!-- Card 2: Funeral Assistance -->
+          <div onclick="openLink('https://forms.gle/vsoYJ1UMALYCX1tv8')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                  <i data-lucide="heart-handshake" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                  Benefits
+                </span>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Perks
-              </span>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-2">
+                Funeral Assistance Request
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                Request company funeral assistance for an eligible deceased immediate family member, subject to company policy.
+              </p>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
-              YSDC Request Form
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Request a Years of Service Discount Certificate (YSDC) for eligible employee discounts.
-            </p>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+              <span class="font-bold uppercase tracking-wider text-[11px]">Open Request Form</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
-            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
 
-        <!-- Card 4: ID Requisition -->
-        <div onclick="openLink('https://forms.gle/fyxXAQoTPTtXpLi67')" class="card-hover group relative bg-slate-950 border border-slate-800 hover:border-orange-500/50 rounded-xl p-5 cursor-pointer flex flex-col justify-between">
-          <div>
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-10 h-10 rounded-lg bg-slate-800 text-orange-400 flex items-center justify-center">
-                <i data-lucide="id-card" class="w-5 h-5"></i>
+          <!-- Card 3: YSDC Request Form -->
+          <div onclick="openLink('https://forms.gle/ghWAzdv3ZbgMC7k68')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                  <i data-lucide="award" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                  Perks
+                </span>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-slate-800 text-slate-400">
-                Service
-              </span>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-2">
+                YSDC Request Form
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                Request a Years of Service Discount Certificate (YSDC) for eligible employee discounts.
+              </p>
             </div>
-            <h4 class="text-sm font-bold text-white group-hover:text-orange-400 transition-colors mb-1">
-              ID Request Form
-            </h4>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Request a company identification card (ID) for issuance, replacement, or employee information updates.
-            </p>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+              <span class="font-bold uppercase tracking-wider text-[11px]">Open Request Form</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-400">
-            <span class="font-semibold text-[10px] uppercase">Open Request Form</span>
-            <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
-          </div>
-        </div>
 
+          <!-- Card 4: ID Requisition -->
+          <div onclick="openLink('https://forms.gle/fyxXAQoTPTtXpLi67')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:border-orange-500/80 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-xl bg-slate-200 dark:bg-slate-800 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                  <i data-lucide="id-card" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                  Service
+                </span>
+              </div>
+              <h4 class="text-base font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-2">
+                ID Request Form
+              </h4>
+              <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                Request a company identification card (ID) for issuance, replacement, or employee information updates.
+              </p>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400">
+              <span class="font-bold uppercase tracking-wider text-[11px]">Open Request Form</span>
+              <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+  <footer class="border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-8 text-center text-xs text-slate-500 dark:text-slate-500 transition-colors duration-300">
     <p>&copy; 2026 Primeline Products Philippines, Inc. All rights reserved.</p>
   </footer>
 
   <script>
     // Initialize Lucide icons
     lucide.createIcons();
+
+    // Dark / Light Mode Toggle Functionality
+    function toggleTheme() {
+      const html = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeLabel = document.getElementById('themeLabel');
+
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        themeIcon.setAttribute('data-lucide', 'moon');
+        themeIcon.className = 'w-5 h-5 text-indigo-600';
+        themeLabel.textContent = 'Dark Mode';
+      } else {
+        html.classList.add('dark');
+        themeIcon.setAttribute('data-lucide', 'sun');
+        themeIcon.className = 'w-5 h-5 text-amber-500';
+        themeLabel.textContent = 'Light Mode';
+      }
+      lucide.createIcons();
+    }
 
     // Open link in a new tab
     function openLink(url) {
@@ -666,20 +692,20 @@
 
       // Create Toast Element
       const toast = document.createElement('div');
-      toast.className = 'toast-animate-in pointer-events-auto bg-slate-900/95 border border-purple-500/30 text-white p-4 rounded-xl shadow-2xl shadow-purple-950/50 backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-white/10';
+      toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-purple-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
 
       toast.innerHTML = `
-        <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-emerald-500/30">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-emerald-500/30">
           <i data-lucide="check-circle-2" class="w-5 h-5"></i>
         </div>
         <div class="flex-1 min-w-0 pr-2">
-          <h5 class="text-xs font-bold text-white leading-tight">Download Started</h5>
-          <p class="text-[11px] text-slate-400 truncate mt-0.5">${docName}</p>
+          <h5 class="text-xs font-bold text-slate-900 dark:text-white leading-tight">Download Started</h5>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 truncate mt-0.5">${docName}</p>
         </div>
-        <button onclick="dismissToast(this.parentElement)" class="text-slate-500 hover:text-white transition-colors">
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
           <i data-lucide="x" class="w-4 h-4"></i>
         </button>
-        <div class="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-800">
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800">
           <div class="progress-bar h-full bg-gradient-to-r from-purple-500 to-emerald-400"></div>
         </div>
       `;
