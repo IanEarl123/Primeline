@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Primeline Products Philippines, Inc. - Field Portal</title>
-  
-  <!-- Page Title Logo / Favicon -->
+  <title>Primeline HR Service Portal</title>
+
   <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6cw0HANn4KFpy9KdVgQFp6wywQiiR933A_GHaSG4J1ylpriB8oiB2G7B-&s=10" />
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <script>
@@ -33,235 +30,600 @@
       }
     }
   </script>
+
   <style>
-    /* Global Smooth Transitions */
     * {
       transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Enhanced Card Hover & Glow Animations */
-    .card-hover {
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-    .card-hover:hover {
-      transform: translateY(-8px) scale(1.015);
+    html { scroll-behavior: smooth; }
+
+    /* Every section reserves room for the sticky header (and, on phones, the bottom tab bar) */
+    section[data-page] {
+      scroll-margin-top: 6.5rem;
     }
 
-    /* Aesthetic Download Button & Card Animation */
-    .dl-card {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .dl-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 25px -5px rgba(168, 85, 247, 0.2);
-    }
-    .dl-card:hover .dl-icon {
-      transform: translateY(3px) scale(1.15);
-      color: #9333ea;
-    }
-    .dark .dl-card:hover .dl-icon {
-      color: #c084fc;
-    }
-    .dl-card:active {
-      transform: scale(0.98);
-    }
-    .dl-icon {
-      transition: transform 0.2s ease, color 0.2s ease;
+    .hero-photo {
+      background-image:
+        linear-gradient(120deg, rgba(15,32,95,0.94) 0%, rgba(20,45,130,0.9) 45%, rgba(29,78,216,0.72) 100%),
+        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
     }
 
-    /* Modal Pop-in Animation */
-    @keyframes modalPop {
-      0% {
-        opacity: 0;
-        transform: scale(0.94) translateY(12px);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
+    @keyframes floatSlow { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+    .float-slow { animation: floatSlow 5s ease-in-out infinite; }
 
-    .modal-animate {
-      animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    @keyframes fadeUp { 0% { opacity: 0; transform: translateY(16px); } 100% { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    /* Toast Notification Animation */
-    @keyframes toastIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
+    .card-hover { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease, border-color 0.3s ease; }
+    .card-hover:hover { transform: translateY(-8px) scale(1.015); }
 
-    @keyframes toastOut {
-      0% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      100% {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.95);
-      }
-    }
+    .dl-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    .dl-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px -5px rgba(168, 85, 247, 0.2); }
+    .dl-card:hover .dl-icon { transform: translateY(3px) scale(1.15); color: #9333ea; }
+    .dark .dl-card:hover .dl-icon { color: #c084fc; }
+    .dl-card:active { transform: scale(0.98); }
+    .dl-icon { transition: transform 0.2s ease, color 0.2s ease; }
 
-    @keyframes progress {
-      0% { width: 100%; }
-      100% { width: 0%; }
-    }
+    @keyframes modalPop { 0% { opacity: 0; transform: scale(0.94) translateY(12px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+    .modal-animate { animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    .toast-animate-in {
-      animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    @keyframes toastIn { 0% { opacity: 0; transform: translateY(-20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes toastOut { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-20px) scale(0.95); } }
+    @keyframes progress { 0% { width: 100%; } 100% { width: 0%; } }
+    .toast-animate-in { animation: toastIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .toast-animate-out { animation: toastOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .progress-bar { animation: progress 3.5s linear forwards; }
+    .progress-bar-slate { animation: progress 8s linear forwards; }
+    .progress-bar-emerald { animation: progress 4s linear forwards; }
 
-    .toast-animate-out {
-      animation: toastOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    .doc-scroll::-webkit-scrollbar { width: 8px; }
+    .doc-scroll::-webkit-scrollbar-track { background: transparent; }
+    .doc-scroll::-webkit-scrollbar-thumb { background-color: rgba(148,163,184,0.5); border-radius: 8px; }
 
-    .progress-bar {
-      animation: progress 3.5s linear forwards;
+    /* ---------- Service category cards ---------- */
+    .svc-card {
+      background: #ffffff;
+      border: 1px solid #e7edf7;
+      border-radius: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(22px);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
     }
+    .dark .svc-card { background: #0f1c33; border-color: rgba(96,165,250,0.15); }
+    .services-in-view .svc-card {
+      opacity: 1;
+      transform: translateY(0);
+      animation: svcFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .services-in-view .svc-card:nth-child(1) { animation-delay: 0.05s; }
+    .services-in-view .svc-card:nth-child(2) { animation-delay: 0.18s; }
+    .services-in-view .svc-card:nth-child(3) { animation-delay: 0.31s; }
+    @keyframes svcFadeUp {
+      0% { opacity: 0; transform: translateY(22px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .svc-card:hover {
+      transform: translateY(-6px);
+    }
+    /* Default (blue) accent */
+    .svc-card[data-accent="blue"]:hover { box-shadow: 0 18px 32px -12px rgba(37, 99, 235, 0.22); border-color: #bfdbfe; }
+    .dark .svc-card[data-accent="blue"]:hover { border-color: rgba(96,165,250,0.35); }
+    .svc-card[data-accent="blue"]:hover .svc-icon { background-color: #2563eb; color: #ffffff; }
+    .svc-card[data-accent="blue"]:hover .svc-arrow { background-color: #2563eb; color: #ffffff; }
+
+    /* Amber accent — Sales Request Letters */
+    .svc-card[data-accent="amber"]:hover { box-shadow: 0 18px 32px -12px rgba(217, 119, 6, 0.25); border-color: #fde68a; }
+    .dark .svc-card[data-accent="amber"]:hover { border-color: rgba(251,191,36,0.35); }
+    .svc-card[data-accent="amber"]:hover .svc-icon { background-color: #d97706; color: #ffffff; }
+    .svc-card[data-accent="amber"]:hover .svc-arrow { background-color: #d97706; color: #ffffff; }
+    .svc-card[data-accent="amber"]:hover h3 { color: #b45309; }
+    .dark .svc-card[data-accent="amber"]:hover h3 { color: #fbbf24; }
+    .svc-card[data-accent="amber"]:hover .svc-count { color: #b45309; }
+    .dark .svc-card[data-accent="amber"]:hover .svc-count { color: #fbbf24; }
+
+    /* Purple accent — Forms & Downloads */
+    .svc-card[data-accent="purple"]:hover { box-shadow: 0 18px 32px -12px rgba(147, 51, 234, 0.25); border-color: #e9d5ff; }
+    .dark .svc-card[data-accent="purple"]:hover { border-color: rgba(192,132,252,0.35); }
+    .svc-card[data-accent="purple"]:hover .svc-icon { background-color: #9333ea; color: #ffffff; }
+    .svc-card[data-accent="purple"]:hover .svc-arrow { background-color: #9333ea; color: #ffffff; }
+    .svc-card[data-accent="purple"]:hover h3 { color: #7e22ce; }
+    .dark .svc-card[data-accent="purple"]:hover h3 { color: #c084fc; }
+    .svc-card[data-accent="purple"]:hover .svc-count { color: #7e22ce; }
+    .dark .svc-card[data-accent="purple"]:hover .svc-count { color: #c084fc; }
+
+    /* Orange accent — HR Compensation & Benefits */
+    .svc-card[data-accent="orange"]:hover { box-shadow: 0 18px 32px -12px rgba(234, 88, 12, 0.25); border-color: #fed7aa; }
+    .dark .svc-card[data-accent="orange"]:hover { border-color: rgba(251,146,60,0.35); }
+    .svc-card[data-accent="orange"]:hover .svc-icon { background-color: #ea580c; color: #ffffff; }
+    .svc-card[data-accent="orange"]:hover .svc-arrow { background-color: #ea580c; color: #ffffff; }
+    .svc-card[data-accent="orange"]:hover h3 { color: #c2410c; }
+    .dark .svc-card[data-accent="orange"]:hover h3 { color: #fb923c; }
+    .svc-card[data-accent="orange"]:hover .svc-count { color: #c2410c; }
+    .dark .svc-card[data-accent="orange"]:hover .svc-count { color: #fb923c; }
+
+    .svc-card h3 { transition: color 0.3s ease; }
+    .svc-card .svc-count { transition: color 0.3s ease; }
+    .svc-icon {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, color 0.3s ease;
+    }
+    .svc-card:hover .svc-icon {
+      transform: scale(1.12) rotate(-4deg);
+    }
+    .svc-arrow {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, color 0.3s ease;
+    }
+    .svc-card:hover .svc-arrow {
+      transform: translateX(4px);
+    }
+    /* Faint diagonal hatch decoration tucked in a card corner */
+    .corner-hatch {
+      position: absolute;
+      right: -10px;
+      bottom: -10px;
+      width: 140px;
+      height: 140px;
+      background-image: repeating-linear-gradient(135deg, rgba(37,99,235,0.16) 0 1.5px, transparent 1.5px 10px);
+      -webkit-mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
+      mask-image: radial-gradient(circle at 100% 100%, black 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .dark .corner-hatch { background-image: repeating-linear-gradient(135deg, rgba(96,165,250,0.18) 0 1.5px, transparent 1.5px 10px); }
+
+    @keyframes bannerPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235,0.25); }
+      50% { box-shadow: 0 0 0 6px rgba(37,99,235,0); }
+    }
+    .banner-pulse { animation: bannerPulse 2.6s ease-in-out infinite; }
+
+    /* Sections that are still locked behind the Privacy gate */
+    section[data-locked="true"] { display: none; }
+
+    /* Mobile bottom tab bar */
+    #mobileTabBar { display: none; }
+    @media (max-width: 639px) {
+      #mobileTabBar { display: flex; }
+      body { padding-bottom: 4.75rem; }
+    }
+    .tab-btn.active { color: #2563eb; }
+    .dark .tab-btn.active { color: #60a5fa; }
   </style>
 </head>
-<body class="min-h-full flex flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white relative">
+<body class="min-h-full flex flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white relative overflow-x-hidden">
 
-  <!-- Toast Notification Container (Top-Right Floating) -->
-  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-[60] flex flex-col gap-3 pointer-events-none items-end"></div>
 
   <!-- Header / Navigation -->
   <header class="sticky top-0 z-40 border-b border-slate-200/90 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
-      
+
       <!-- Company Branding -->
-      <div class="flex items-center gap-4">
-        <!-- Company Logo Badge -->
-        <div class="w-14 h-14 rounded-2xl bg-white p-1.5 flex items-center justify-center shadow-md shadow-brand-500/10 ring-1 ring-slate-200 dark:ring-white/20 overflow-hidden transform hover:scale-105 transition-transform duration-300">
-          <img 
-            src="https://image-service-cdn.seek.com.au/687fc2c05f38655dcd410f00a03cddaa4847f04e/f3c5292cec0e05e4272d9bf9146f390d366481d0" 
-            alt="Primeline Logo" 
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- Mobile: PL mark in a compact square (saves header space) -->
+        <div class="sm:hidden w-11 h-11 rounded-2xl bg-white flex items-center justify-center shadow-md shadow-brand-500/10 ring-1 ring-slate-200 dark:ring-white/20 overflow-hidden shrink-0 p-1.5">
+          <img
+            src="data:image/png;base64,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"
+            alt="Primeline Logo"
             class="w-full h-full object-contain"
           />
         </div>
+        <!-- Desktop: full transparent wordmark logo, unboxed -->
+        <img
+          src="data:image/png;base64,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"
+          alt="Primeline Logo"
+          class="hidden sm:block h-7 sm:h-8 w-auto object-contain shrink-0"
+        />
         <div>
           <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">HR Service Portal</h1>
-          <p class="text-xs sm:text-sm text-brand-600 dark:text-brand-400 font-bold tracking-wider uppercase">Primeline Products Philippines, Inc.</p>
+          <p class="text-xs sm:text-sm text-brand-900 dark:text-brand-300 font-bold tracking-wider uppercase">Primeline Products Philippines, Inc.</p>
         </div>
       </div>
-
-      <!-- Theme Switcher Toggle -->
-      <button id="themeToggle" onclick="toggleTheme()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-sm shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 hover:scale-105 active:scale-95 transition-all">
-        <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-indigo-600"></i>
-        <span id="themeLabel" class="hidden sm:inline font-semibold">Dark Mode</span>
-      </button>
+    <!-- Nav + Theme Switcher -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="goTo('welcome')" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all">
+          <i data-lucide="home" class="w-4 h-4"></i> Welcome
+        </button>
+        <button onclick="goTo('services')" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all">
+          <i data-lucide="layout-grid" class="w-4 h-4"></i> Services
+        </button>
+        <button onclick="openPrivacyModal()" id="navPrivacyBtn" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs transition-all">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Privacy &amp; Terms
+        </button>
+        <button id="themeToggle" onclick="toggleTheme()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-sm shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 hover:scale-105 active:scale-95 transition-all">
+          <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-indigo-600"></i>
+          <span id="themeLabel" class="hidden sm:inline font-semibold">Dark Mode</span>
+        </button>
+      </div>
 
     </div>
   </header>
 
-  <!-- Main Content Area -->
-  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10 justify-center">
+  <!-- ============================================================ -->
+  <!-- SECTION 1: PRIVACY POLICY & TERMS (landing gate)             -->
+  <!-- ============================================================ -->
+  <section id="privacy" data-page="privacy" class="w-full">
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
 
-    <div class="text-center sm:text-left space-y-2">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Service Categories</h2>
-      <p class="text-base text-slate-600 dark:text-slate-400">Select a category below to access the corresponding requests, forms, documents, and self-service tools.</p>
-    </div>
-
-    <!-- Category Cards Grid (3 Main Categories) -->
-    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <!-- Category 1: Letters -->
-      <div onclick="openModal('lettersModal')" class="card-hover group relative bg-amber-50/40 dark:bg-slate-900 border border-amber-200/80 dark:border-slate-800 hover:border-amber-500 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-lg hover:shadow-2xl hover:shadow-amber-500/10 dark:shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-amber-500/15 via-amber-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div>
-          <div class="flex items-center justify-between mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white group-hover:scale-110 shadow-sm">
-              <i data-lucide="mail" class="w-8 h-8"></i>
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-amber-100/80 dark:bg-slate-800 text-amber-800 dark:text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-colors">
-              REQUEST
-            </span>
-          </div>
-          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors mb-3">
-            Sales Request Letters
-          </h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Submit official request letters for store-related requirements and operational needs.
-          </p>
-        </div>
-        <div class="mt-8 pt-5 border-t border-amber-200/60 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500">
-          <span class="font-bold text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">2 Request Forms</span>
-          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-all transform group-hover:translate-x-1"></i>
-        </div>
+      <div class="text-center space-y-2">
+        <span class="inline-flex items-center gap-2 bg-brand-100 dark:bg-slate-800 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Legal
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Privacy Policy &amp; Terms and Conditions</h2>
+        <p class="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Please read the following carefully before using the Primeline HR Service Portal.</p>
       </div>
 
-      <!-- Category 2: Forms & Documents -->
-      <div onclick="openModal('formsModal')" class="card-hover group relative bg-purple-50/40 dark:bg-slate-900 border border-purple-200/80 dark:border-slate-800 hover:border-purple-500 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-lg hover:shadow-2xl hover:shadow-purple-500/10 dark:shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-purple-500/15 via-purple-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div>
-          <div class="flex items-center justify-between mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center transition-all duration-300 group-hover:bg-purple-600 group-hover:text-white group-hover:scale-110 shadow-sm">
-              <i data-lucide="file-text" class="w-8 h-8"></i>
-            </div>
-            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-purple-100/80 dark:bg-slate-800 text-purple-800 dark:text-purple-400 group-hover:bg-purple-600 group-hover:text-white transition-colors">
-              RESOURCES
-            </span>
-          </div>
-          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors mb-3">
-            Forms & Downloads
-          </h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Access and download printable Human Resources and government benefit forms in PDF format.
-          </p>
-        </div>
-        <div class="mt-8 pt-5 border-t border-purple-200/60 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500">
-          <span class="font-bold text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">8 PDF Documents</span>
-          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-all transform group-hover:translate-x-1"></i>
-        </div>
+      <!-- Tabs -->
+      <div class="flex items-center justify-center gap-3">
+        <button id="tabPrivacyBtn" onclick="switchTab('privacy')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all">
+          Privacy Policy
+        </button>
+        <button id="tabTermsBtn" onclick="switchTab('terms')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+          Terms &amp; Conditions
+        </button>
       </div>
 
-      <!-- Category 3: HR -->
-      <div onclick="openModal('hrModal')" class="card-hover group relative bg-orange-50/40 dark:bg-slate-900 border border-orange-200/80 dark:border-slate-800 hover:border-orange-500 rounded-3xl p-8 cursor-pointer flex flex-col justify-between shadow-lg hover:shadow-2xl hover:shadow-orange-500/10 dark:shadow-black/40 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-orange-500/15 via-orange-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-        <div>
-          <div class="flex items-center justify-between mb-6">
-            <div class="w-16 h-16 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center transition-all duration-300 group-hover:bg-orange-500 group-hover:text-white group-hover:scale-110 shadow-sm">
-              <i data-lucide="users" class="w-8 h-8"></i>
+      <!-- Document Card -->
+      <section class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-lg overflow-hidden">
+
+        <!-- Privacy Policy Panel -->
+        <div id="panelPrivacy" class="p-8 sm:p-10 space-y-6 doc-scroll max-h-[55vh] overflow-y-auto">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
+              <i data-lucide="lock" class="w-6 h-6"></i>
             </div>
-            <span class="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-orange-100/80 dark:bg-slate-800 text-orange-800 dark:text-orange-400 group-hover:bg-orange-500 group-hover:text-white transition-colors">
-              EMPLOYEE SERVICES
+            <div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Privacy Policy</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p>Primeline Products Philippines, Inc. ("Primeline," "we," "us," or "our") values the privacy of our employees. This Privacy Policy explains how we collect, use, store, and protect personal data submitted through the HR Service Portal, in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines.</p>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="database" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Information We Collect
+              </h4>
+              <p>When you use the portal, we may collect personal information such as your name, employee ID, position, department, contact details, and any information you provide when submitting requests, forms, or letters (e.g., certificates, benefits, or compensation requests).</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> How We Use Your Information
+              </h4>
+              <p>Your data is used solely to process HR-related requests, generate official documents, verify employment details, administer benefits, and improve the services offered through this portal. We do not sell or rent your personal information to third parties.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Legal Basis for Processing
+              </h4>
+              <p>Where applicable, we process personal information based on:<br>
+                • Your consent<br>
+                • Performance of a contract<br>
+                • Compliance with legal obligations<br>
+                • Our legitimate business interests<br>
+              </p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="share-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Sharing
+              </h4>
+              <p>Primeline does not sell personal information. Information may be shared internally with authorized HR personnel, and externally with government agencies (such as SSS, Pag-IBIG, and PhilHealth) only where required to process statutory benefits or as mandated by law.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="shield" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Retention &amp; Security
+              </h4>
+              <p>We retain personal data only for as long as necessary to: <br>
+                • fulfill the purposes stated in this policy or as required by law<br>
+                • We apply reasonable administrative, technical, and physical safeguards to protect it from unauthorized access, alteration, or disclosure.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="user-check" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Your Rights
+              </h4>
+              <p>You have the right to access, correct, or request deletion of your personal data, and to withdraw consent at any time, subject to legal and contractual restrictions. For concerns, please contact your HR department.</p>
+            </div>
+          </div>
+
+          <label for="agreePrivacyCheckbox" class="flex items-start gap-3 cursor-pointer select-none bg-brand-50/60 dark:bg-slate-800/60 border border-brand-100 dark:border-slate-700 rounded-2xl p-4 mt-2">
+            <input type="checkbox" id="agreePrivacyCheckbox" onchange="checkAgreements('privacy')" class="mt-0.5 w-5 h-5 rounded-md border-2 border-slate-300 dark:border-slate-600 text-brand-600 focus:ring-brand-500 cursor-pointer accent-brand-600" />
+            <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              I have read and understood the <span class="font-bold text-slate-900 dark:text-white">Privacy Policy</span>.
+            </span>
+          </label>
+        </div>
+
+        <!-- Terms & Conditions Panel -->
+        <div id="panelTerms" class="p-8 sm:p-10 space-y-6 doc-scroll max-h-[55vh] overflow-y-auto hidden">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+              <i data-lucide="scroll-text" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Terms and Conditions</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p>By accessing and using the Primeline HR Service Portal, you agree to be bound by the following Terms and Conditions. If you do not agree with any part of these terms, please refrain from using the portal.</p>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="badge-check" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Acceptable Use
+              </h4>
+              <p>This portal is intended solely for legitimate HR-related transactions by authorized Primeline employees. Any misuse, falsification of information, or unauthorized access will be subject to disciplinary action under company policy.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="file-check-2" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Accuracy of Requests
+              </h4>
+              <p>You are responsible for ensuring that all information submitted through requests, forms, and letters is true, accurate, and complete. Primeline reserves the right to verify, delay, or deny requests containing inaccurate or incomplete information.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="cookie" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Data Collection &amp; Consent
+              </h4>
+              <p>By checking the agreement box below and continuing to use this portal, you acknowledge and consent that we collect, process, and store your personal and employment data as described in our Privacy Policy, for the purpose of delivering HR services to you.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Changes to These Terms
+              </h4>
+              <p>Primeline may update these Terms and Conditions from time to time. Continued use of the portal after changes are posted constitutes your acceptance of the revised terms.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="scale" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Governing Law
+              </h4>
+              <p>These Terms shall be governed by and construed in accordance with the laws of the Republic of the Philippines.</p>
+            </div>
+          </div>
+
+          <label for="agreeTermsCheckbox" class="flex items-start gap-3 cursor-pointer select-none bg-orange-50/60 dark:bg-slate-800/60 border border-orange-100 dark:border-slate-700 rounded-2xl p-4 mt-2">
+            <input type="checkbox" id="agreeTermsCheckbox" onchange="checkAgreements('terms')" class="mt-0.5 w-5 h-5 rounded-md border-2 border-slate-300 dark:border-slate-600 text-orange-600 focus:ring-orange-500 cursor-pointer accent-orange-600" />
+            <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+              I have read and understood the <span class="font-bold text-slate-900 dark:text-white">Terms and Conditions</span>, and I consent to the collection and processing of my personal data as described in the Privacy Policy.
+            </span>
+          </label>
+        </div>
+
+        <!-- Agreement Bar -->
+        <div class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5 justify-between">
+          <div class="flex items-center gap-3 text-sm">
+            <span id="privacyCheckStatus" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors">
+              <i data-lucide="circle" class="w-3.5 h-3.5"></i> Privacy Policy
+            </span>
+            <span id="termsCheckStatus" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors">
+              <i data-lucide="circle" class="w-3.5 h-3.5"></i> Terms &amp; Conditions
             </span>
           </div>
-          <h3 class="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors mb-3">
-            HR Compensation & Benefits
-          </h3>
-          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            Request HR services related to compensation, employee benefits, certificates, assistance programs, and other HR support.
-          </p>
+          <button id="continueBtn" disabled onclick="unlockPortal()" class="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-7 py-3.5 rounded-2xl cursor-not-allowed transition-all">
+            Continue <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
         </div>
-        <div class="mt-8 pt-5 border-t border-orange-200/60 dark:border-slate-800/80 flex items-center justify-between text-sm text-slate-500">
-          <span class="font-bold text-xs uppercase tracking-wider text-slate-600 dark:text-slate-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">4 HR Forms</span>
-          <i data-lucide="layers" class="w-5 h-5 text-slate-400 dark:text-slate-500 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-all transform group-hover:translate-x-1"></i>
+      </section>
+
+    </main>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 2: WELCOME (locked until Privacy is accepted)        -->
+  <!-- ============================================================ -->
+  <section id="welcome" data-page="welcome" data-locked="true" class="w-full">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-14">
+
+      <!-- Hero Card with Background Photo -->
+      <section class="hero-photo relative rounded-[2rem] overflow-hidden shadow-2xl min-h-[420px] sm:min-h-[460px] flex items-center fade-up">
+        <div class="relative z-10 w-full px-8 sm:px-14 py-14 flex flex-col lg:flex-row items-center gap-10">
+
+          <div class="flex-1 space-y-6 text-center lg:text-left">
+            <span class="inline-flex items-center gap-2 bg-white/15 border border-white/25 text-white text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full backdrop-blur-sm">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Welcome!
+            </span>
+
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.05] tracking-tight">
+              Your HR Services,<br />
+              <span class="text-blue-400">Simplified.</span>
+            </h2>
+
+            <p class="text-base sm:text-lg text-blue-100/90 max-w-lg mx-auto lg:mx-0">
+              Access requests, forms, and HR resources in one convenient place — built for every Primeline employee, anytime, anywhere.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-2 justify-center lg:justify-start">
+              <button onclick="goTo('services')" class="inline-flex items-center gap-2 bg-white text-brand-700 hover:bg-blue-50 font-bold text-sm sm:text-base px-7 py-3.5 rounded-2xl shadow-lg shadow-black/20 hover:scale-105 active:scale-95 transition-all">
+                Get Started <i data-lucide="arrow-right" class="w-5 h-5"></i>
+              </button>
+              <button onclick="openPrivacyModal()" class="inline-flex items-center gap-2 text-white/90 hover:text-white font-semibold text-sm px-5 py-3.5 rounded-2xl border border-white/25 hover:bg-white/10 transition-all">
+                <i data-lucide="shield-check" class="w-4 h-4"></i> Privacy &amp; Terms
+              </button>
+            </div>
+          </div>
+
         </div>
+      </section>
+
+      <!-- Quick Highlights -->
+      <section class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-up" style="animation-delay: .1s">
+        <button onclick="goTo('services')" class="text-left bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0">
+            <i data-lucide="mail" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Sales Request Letters</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Submit official request letters in a few clicks.</p>
+          </div>
+        </button>
+        <button onclick="goTo('services')" class="text-left bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+            <i data-lucide="file-text" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white mb-1">Forms &amp; Downloads</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Download HR and government benefit forms as PDFs.</p>
+          </div>
+        </button>
+        <button onclick="goTo('services')" class="text-left bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-6 flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+            <i data-lucide="users" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 dark:text-white mb-1">HR Compensation &amp; Benefits</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400">Request certificates, benefits, and employee support.</p>
+          </div>
+        </button>
+      </section>
+
+    </main>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- SECTION 3: SERVICES (locked until Privacy is accepted)       -->
+  <!-- ============================================================ -->
+  <section id="services" data-page="services" data-locked="true" class="w-full">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
+
+      <div class="text-center sm:text-left space-y-2">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Service Categories</h2>
+        <p class="text-base text-slate-600 dark:text-slate-400">Select a category below to access the corresponding requests, forms, documents, and self-service tools.</p>
       </div>
 
-    </section>
-  </main>
+      <!-- Category Cards Grid (3 Main Categories) -->
+      <section id="svcCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
+        <!-- Category 1: Letters -->
+        <div onclick="openModal('lettersModal')" class="svc-card group cursor-pointer p-8 flex flex-col justify-between" data-accent="amber">
+          <div class="corner-hatch"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-6">
+              <div class="svc-icon w-14 h-14 rounded-2xl bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                <i data-lucide="mail" class="w-7 h-7"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-700 dark:text-brand-400">
+                REQUEST
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">
+              Sales Request Letters
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Submit official request letters for store-related requirements and operational needs.
+            </p>
+          </div>
+          <div class="relative mt-8 pt-5 border-t border-dashed border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span class="svc-count font-bold text-xs uppercase tracking-wider text-brand-600 dark:text-brand-400">2 Request Forms</span>
+            <span class="svc-arrow w-8 h-8 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Category 2: Forms & Documents -->
+        <div onclick="openModal('formsModal')" class="svc-card group cursor-pointer p-8 flex flex-col justify-between" data-accent="purple">
+          <div class="corner-hatch"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-6">
+              <div class="svc-icon w-14 h-14 rounded-2xl bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                <i data-lucide="file-text" class="w-7 h-7"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-700 dark:text-brand-400">
+                RESOURCES
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">
+              Forms &amp; Downloads
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Access and download printable Human Resources and government benefit forms in PDF format.
+            </p>
+          </div>
+          <div class="relative mt-8 pt-5 border-t border-dashed border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span class="svc-count font-bold text-xs uppercase tracking-wider text-brand-600 dark:text-brand-400">8 PDF Documents</span>
+            <span class="svc-arrow w-8 h-8 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Category 3: HR -->
+        <div onclick="openModal('hrModal')" class="svc-card group cursor-pointer p-8 flex flex-col justify-between" data-accent="orange">
+          <div class="corner-hatch"></div>
+          <div class="relative">
+            <div class="flex items-center justify-between mb-6">
+              <div class="svc-icon w-14 h-14 rounded-2xl bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+                <i data-lucide="user" class="w-7 h-7"></i>
+              </div>
+              <span class="text-[11px] font-bold uppercase tracking-widest px-3 py-1.5 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-700 dark:text-brand-400">
+                EMPLOYEE SERVICES
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3">
+              HR Compensation &amp; Benefits
+            </h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+              Request HR services related to compensation, employee benefits, certificates, assistance programs, and other HR support.
+            </p>
+          </div>
+          <div class="relative mt-8 pt-5 border-t border-dashed border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <span class="svc-count font-bold text-xs uppercase tracking-wider text-brand-600 dark:text-brand-400">4 HR Forms</span>
+            <span class="svc-arrow w-8 h-8 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-600 dark:text-brand-400 flex items-center justify-center">
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- New Forms & Updates Banner -->
+      <section class="svc-card relative p-6 sm:p-7 flex items-center gap-5" style="animation-delay:.42s;" data-accent="blue">
+        <div class="corner-hatch"></div>
+        <div class="banner-pulse w-12 h-12 rounded-2xl bg-brand-600 text-white flex items-center justify-center shrink-0 relative z-10">
+          <i data-lucide="megaphone" class="w-6 h-6"></i>
+        </div>
+        <div class="relative z-10 flex-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <h4 class="font-bold text-slate-900 dark:text-white">New Forms &amp; Updates</h4>
+            <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full bg-blue-50 dark:bg-slate-800 text-brand-700 dark:text-brand-400">Coming Soon</span>
+          </div>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+            New forms, services, and HR-related updates will be uploaded to the portal soon. Please check back regularly for the latest additions and announcements.
+          </p>
+        </div>
+        <div class="relative z-10 hidden sm:flex w-12 h-12 rounded-2xl bg-blue-50 dark:bg-slate-800 text-brand-400 dark:text-brand-400/70 items-center justify-center shrink-0">
+          <i data-lucide="calendar-check" class="w-6 h-6"></i>
+        </div>
+      </section>
+    </main>
+  </section>
 
   <!-- ================= CATEGORY MODALS ================= -->
 
   <!-- 1. Letters Modal -->
   <div id="lettersModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
-    <div class="modal-animate bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-3xl p-8 shadow-2xl space-y-8">
+    <div class="modal-animate bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-3xl p-8 shadow-2xl space-y-8 max-h-[88vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
         <div class="flex items-center gap-4">
           <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center">
             <i data-lucide="mail" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Letters & Requests</h3>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Letters &amp; Requests</h3>
             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Select a request form below to submit your letter or request.</p>
           </div>
         </div>
@@ -271,7 +633,6 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <!-- Card: Absent Request -->
         <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdJwk8ZZ4hez_K4JvRGAa36ioHOtUVPBe2Jy2hheA34DgnpdQ/viewform')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-brand-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
@@ -295,7 +656,6 @@
           </div>
         </div>
 
-        <!-- Card: Change Request -->
         <div onclick="openLink('https://forms.gle/aTVpPupSr8V23X2h6')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-amber-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
@@ -331,7 +691,7 @@
             <i data-lucide="file-text" class="w-6 h-6"></i>
           </div>
           <div>
-            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Forms & PDF Downloads</h3>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Forms &amp; PDF Downloads</h3>
             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Download official company and government forms for HR requests, benefits, and SSS filings.</p>
           </div>
         </div>
@@ -341,9 +701,8 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        
-        <!-- PDF Form: Cash Advance Blank Form -->
-        <a href="CA Blank Form.pdf" download="CA Blank Form.pdf" onclick="triggerToast('Cash Advance Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden shadow-sm hover:shadow-md">
+
+        <a href="CA Blank Form.pdf" download="CA Blank Form.pdf" onclick="triggerDownloadToast('Cash Advance Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between relative overflow-hidden shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -366,8 +725,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 1 -->
-        <a href="PAG-IBIG LOAN FORM 2025.pdf" download="PAG-IBIG LOAN FORM 2025.pdf" onclick="triggerToast('MPLAF PAG-IBIG FORM')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="PAG-IBIG LOAN FORM 2025.pdf" download="PAG-IBIG LOAN FORM 2025.pdf" onclick="triggerDownloadToast('MPLAF PAG-IBIG FORM')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -390,8 +748,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 2 -->
-        <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerToast('Maternity Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="NEW MAT 1-MATERNITY NOTIFICATION.pdf" download="NEW MAT 1-MATERNITY NOTIFICATION.pdf" onclick="triggerDownloadToast('Maternity Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -414,8 +771,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 3 -->
-        <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerToast('OB History Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="OB HISTORY FORM.pdf" download="OB HISTORY FORM.pdf" onclick="triggerDownloadToast('OB History Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -438,8 +794,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 4 -->
-        <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerToast('Sickness Medical Certificate')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="SICKNESS MEDICAL CERTIFICATE.pdf" download="SICKNESS MEDICAL CERTIFICATE.pdf" onclick="triggerDownloadToast('Sickness Medical Certificate')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -462,8 +817,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 5 -->
-        <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerToast('Sickness Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="SICKNESS NOTIFICATION 2025.pdf" download="SICKNESS NOTIFICATION 2025.pdf" onclick="triggerDownloadToast('Sickness Notification Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -486,8 +840,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 6 -->
-        <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="SSSForm_EC_Accident_Sickness_Report.pdf" download="SSSForm_EC_Accident_Sickness_Report.pdf" onclick="triggerDownloadToast('EC Accident / Sickness Report')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -510,8 +863,7 @@
           </div>
         </a>
 
-        <!-- PDF Form 7 -->
-        <a href="Incident Report Form.pdf" download="Incident Report Form.pdf" onclick="triggerToast('Incident Report Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
+        <a href="Incident Report Form.pdf" download="Incident Report Form.pdf" onclick="triggerDownloadToast('Incident Report Form')" class="dl-card group bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-purple-500 rounded-2xl p-6 flex flex-col justify-between shadow-sm hover:shadow-md">
           <div>
             <div class="flex items-center justify-between mb-4">
               <div class="w-12 h-12 rounded-xl bg-purple-100/80 dark:bg-slate-800 text-purple-600 dark:text-purple-400 flex items-center justify-center group-hover:bg-purple-600 group-hover:text-white transition-colors">
@@ -541,8 +893,7 @@
   <!-- 3. HR Modal -->
   <div id="hrModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 hidden">
     <div class="modal-animate bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-4xl shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
-      
-      <!-- Modal Header -->
+
       <div class="sticky top-0 z-20 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-6 flex items-center justify-between shrink-0">
         <div class="flex items-center gap-4 pr-2">
           <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
@@ -553,17 +904,15 @@
             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Access employee support services, benefits, and HR document requests.</p>
           </div>
         </div>
-        
+
         <button onclick="closeModal('hrModal')" aria-label="Close Modal" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
           <i data-lucide="x" class="w-6 h-6"></i>
         </button>
       </div>
 
-      <!-- Modal Content Grid (Scrollable) -->
       <div class="p-6 overflow-y-auto space-y-6">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          
-          <!-- Card 1: COE Request Form -->
+
           <div onclick="openLink('https://docs.google.com/forms/d/e/1FAIpQLSdApX0S-nhNzvD8-pd8MdYC9C0m1xG5lczAxBEApKcgbchYRQ/viewform')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
             <div>
               <div class="flex items-center justify-between mb-4">
@@ -587,7 +936,6 @@
             </div>
           </div>
 
-          <!-- Card 2: Funeral Assistance -->
           <div onclick="openLink('https://forms.gle/vsoYJ1UMALYCX1tv8')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
             <div>
               <div class="flex items-center justify-between mb-4">
@@ -611,7 +959,6 @@
             </div>
           </div>
 
-          <!-- Card 3: YSDC Request Form -->
           <div onclick="openLink('https://forms.gle/ghWAzdv3ZbgMC7k68')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
             <div>
               <div class="flex items-center justify-between mb-4">
@@ -635,7 +982,6 @@
             </div>
           </div>
 
-          <!-- Card 4: ID Requisition -->
           <div onclick="openLink('https://forms.gle/fyxXAQoTPTtXpLi67')" class="card-hover group relative bg-slate-50 dark:bg-slate-950 border border-slate-200/80 dark:border-slate-800 hover:border-orange-500 rounded-2xl p-6 cursor-pointer flex flex-col justify-between shadow-sm hover:shadow-md">
             <div>
               <div class="flex items-center justify-between mb-4">
@@ -665,15 +1011,192 @@
   </div>
 
   <!-- Footer -->
-  <footer class="border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-8 text-center text-xs text-slate-500 dark:text-slate-500">
+  <footer class="border-t border-slate-200 dark:border-slate-900 bg-white dark:bg-slate-950 py-8 text-center text-xs text-slate-500 dark:text-slate-500 space-y-4">
+    <div class="flex items-center justify-center">
+      <img
+        src="data:image/png;base64,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"
+        alt="Primeline Logo"
+        class="h-5 w-auto object-contain opacity-80"
+      />
+    </div>
+    <div class="flex items-center justify-center font-semibold">
+      <button onclick="openPrivacyModal()" id="footerPrivacyBtn" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Privacy Policy &amp; Terms</button>
+    </div>
     <p>&copy; 2026 Primeline Products Philippines, Inc. All rights reserved.</p>
   </footer>
 
+
+  <!-- View-only Privacy & Terms Modal (no re-agreement needed) -->
+  <div id="privacyViewModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 hidden">
+    <div class="modal-animate bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl w-full max-w-3xl shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
+
+      <div class="sticky top-0 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 p-6 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-4">
+          <div class="w-11 h-11 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white leading-tight">Privacy Policy &amp; Terms</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">For your reference — no action needed.</p>
+          </div>
+        </div>
+        <button onclick="closePrivacyModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shrink-0">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="px-6 pt-5 shrink-0">
+        <div class="flex items-center gap-3">
+          <button id="vpTabPrivacyBtn" onclick="switchViewTab('privacy')" class="px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all">
+            Privacy Policy
+          </button>
+          <button id="vpTabTermsBtn" onclick="switchViewTab('terms')" class="px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+            Terms &amp; Conditions
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6 overflow-y-auto doc-scroll text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+<div id="vpPanelPrivacy" class="space-y-6">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
+              <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Privacy Policy</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p>Primeline Products Philippines, Inc. ("Primeline," "we," "us," or "our") values the privacy of our employees. This Privacy Policy explains how we collect, use, store, and protect personal data submitted through the HR Service Portal, in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines.</p>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="database" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Information We Collect
+              </h4>
+              <p>When you use the portal, we may collect personal information such as your name, employee ID, position, department, contact details, and any information you provide when submitting requests, forms, or letters (e.g., certificates, benefits, or compensation requests).</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> How We Use Your Information
+              </h4>
+              <p>Your data is used solely to process HR-related requests, generate official documents, verify employment details, administer benefits, and improve the services offered through this portal. We do not sell or rent your personal information to third parties.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Legal Basis for Processing
+              </h4>
+              <p>Where applicable, we process personal information based on:<br>
+                • Your consent<br>
+                • Performance of a contract<br>
+                • Compliance with legal obligations<br>
+                • Our legitimate business interests<br>
+              </p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="share-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Sharing
+              </h4>
+              <p>Primeline does not sell personal information. Information may be shared internally with authorized HR personnel, and externally with government agencies (such as SSS, Pag-IBIG, and PhilHealth) only where required to process statutory benefits or as mandated by law.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="shield" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Retention &amp; Security
+              </h4>
+              <p>We retain personal data only for as long as necessary to: <br>
+                • fulfill the purposes stated in this policy or as required by law<br>
+                • We apply reasonable administrative, technical, and physical safeguards to protect it from unauthorized access, alteration, or disclosure.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="user-check" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Your Rights
+              </h4>
+              <p>You have the right to access, correct, or request deletion of your personal data, and to withdraw consent at any time, subject to legal and contractual restrictions. For concerns, please contact your HR department.</p>
+            </div>
+          </div>
+
+          
+        </div>
+<div id="vpPanelTerms" class="space-y-6 hidden">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
+              <i data-lucide="scroll-text" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Terms and Conditions</h3>
+              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p>By accessing and using the Primeline HR Service Portal, you agree to be bound by the following Terms and Conditions. If you do not agree with any part of these terms, please refrain from using the portal.</p>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="badge-check" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Acceptable Use
+              </h4>
+              <p>This portal is intended solely for legitimate HR-related transactions by authorized Primeline employees. Any misuse, falsification of information, or unauthorized access will be subject to disciplinary action under company policy.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="file-check-2" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Accuracy of Requests
+              </h4>
+              <p>You are responsible for ensuring that all information submitted through requests, forms, and letters is true, accurate, and complete. Primeline reserves the right to verify, delay, or deny requests containing inaccurate or incomplete information.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="cookie" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Data Collection &amp; Consent
+              </h4>
+              <p>By checking the agreement box below and continuing to use this portal, you acknowledge and consent that we collect, process, and store your personal and employment data as described in our Privacy Policy, for the purpose of delivering HR services to you.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Changes to These Terms
+              </h4>
+              <p>Primeline may update these Terms and Conditions from time to time. Continued use of the portal after changes are posted constitutes your acceptance of the revised terms.</p>
+            </div>
+
+            <div>
+              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
+                <i data-lucide="scale" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Governing Law
+              </h4>
+              <p>These Terms shall be governed by and construed in accordance with the laws of the Republic of the Philippines.</p>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Bottom Tab Bar (Home & Services) -->
+  <nav id="mobileTabBar" class="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md items-stretch">
+    <button onclick="goTo('welcome')" data-tab="welcome" class="tab-btn flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 dark:text-slate-400 font-semibold text-xs">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      Home
+    </button>
+    <button onclick="goTo('services')" data-tab="services" class="tab-btn flex-1 flex flex-col items-center justify-center gap-1 py-2.5 text-slate-500 dark:text-slate-400 font-semibold text-xs">
+      <i data-lucide="layout-grid" class="w-5 h-5"></i>
+      Services
+    </button>
+  </nav>
+
   <script>
-    // Initialize Lucide icons
     lucide.createIcons();
 
-    // Dark / Light Mode Toggle Functionality
+    let portalUnlocked = false;
+
+    // ---------- Theme ----------
     function toggleTheme() {
       const html = document.documentElement;
       const themeIcon = document.getElementById('themeIcon');
@@ -695,32 +1218,246 @@
       lucide.createIcons();
     }
 
-    // Open link in a new tab
-    function openLink(url) {
-      if (url && url !== 'YOUR_COE_FORM_LINK_HERE' && url !== 'YOUR_YSDC_FORM_LINK_HERE') {
-        window.open(url, '_blank', 'noopener,noreferrer');
+    // ---------- Privacy tabs ----------
+    function switchTab(tab) {
+      const privacyBtn = document.getElementById('tabPrivacyBtn');
+      const termsBtn = document.getElementById('tabTermsBtn');
+      const panelPrivacy = document.getElementById('panelPrivacy');
+      const panelTerms = document.getElementById('panelTerms');
+
+      if (tab === 'privacy') {
+        panelPrivacy.classList.remove('hidden');
+        panelTerms.classList.add('hidden');
+        privacyBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all';
+        termsBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
       } else {
-        alert('Please update the form link in the HTML source before proceeding.');
+        panelPrivacy.classList.add('hidden');
+        panelTerms.classList.remove('hidden');
+        termsBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all';
+        privacyBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+
+        if (!window.__termsNoticeShown) {
+          window.__termsNoticeShown = true;
+          triggerDataNotice();
+        }
       }
     }
 
-    // Modal Control Functions
+    function checkAgreements(which) {
+      const privacyChecked = document.getElementById('agreePrivacyCheckbox').checked;
+      const termsChecked = document.getElementById('agreeTermsCheckbox').checked;
+      const continueBtn = document.getElementById('continueBtn');
+      const privacyStatus = document.getElementById('privacyCheckStatus');
+      const termsStatus = document.getElementById('termsCheckStatus');
+
+      updateCheckStatus(privacyStatus, privacyChecked, 'brand');
+      updateCheckStatus(termsStatus, termsChecked, 'orange');
+
+      if (privacyChecked && termsChecked) {
+        continueBtn.disabled = false;
+        continueBtn.className = 'w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 hover:scale-105 active:scale-95 cursor-pointer transition-all';
+        triggerAgreedToast();
+      } else {
+        continueBtn.disabled = true;
+        continueBtn.className = 'w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-7 py-3.5 rounded-2xl cursor-not-allowed transition-all';
+        if ((which === 'privacy' && privacyChecked) || (which === 'terms' && termsChecked)) {
+          triggerPartialAgreedToast(which);
+        }
+      }
+    }
+
+    function updateCheckStatus(el, checked, color) {
+      if (checked) {
+        el.className = `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-${color}-100 dark:bg-${color}-500/15 text-${color}-700 dark:text-${color}-400 font-semibold text-xs transition-colors`;
+        el.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> ${el.textContent.trim()}`;
+      } else {
+        el.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors';
+        el.innerHTML = `<i data-lucide="circle" class="w-3.5 h-3.5"></i> ${el.textContent.trim()}`;
+      }
+      lucide.createIcons();
+    }
+
+    // ---------- Unlock the rest of the portal ----------
+    function unlockPortal() {
+      const privacyChecked = document.getElementById('agreePrivacyCheckbox').checked;
+      const termsChecked = document.getElementById('agreeTermsCheckbox').checked;
+      if (!privacyChecked || !termsChecked) return;
+      portalUnlocked = true;
+
+      document.querySelectorAll('section[data-locked="true"]').forEach(sec => {
+        sec.removeAttribute('data-locked');
+        sec.style.display = '';
+      });
+
+      // Privacy gate has been accepted — remove it from view entirely.
+      // It only reappears if the page is refreshed.
+      const privacySection = document.getElementById('privacy');
+      if (privacySection) privacySection.style.display = 'none';
+
+      goTo('welcome');
+    }
+
+    // ---------- Section navigation ----------
+    function goTo(sectionId) {
+      if (!portalUnlocked && sectionId !== 'privacy') {
+        goTo('privacy');
+        triggerLockedToast();
+        return;
+      }
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      updateActiveTab(sectionId);
+    }
+
+    function updateActiveTab(sectionId) {
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === sectionId);
+      });
+    }
+
+    // Keep the mobile tab bar in sync while the user scrolls
+    const sectionEls = ['welcome', 'services'].map(id => document.getElementById(id));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) updateActiveTab(entry.target.id);
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    sectionEls.forEach(el => { if (el) observer.observe(el); });
+
+    // Play the service-card fade-up animation the first time Services enters view
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      const svcObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            servicesSection.classList.add('services-in-view');
+            svcObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      svcObserver.observe(servicesSection);
+    }
+
+    // ---------- Modals ----------
     function openModal(modalId) {
       document.getElementById(modalId).classList.remove('hidden');
     }
-
     function closeModal(modalId) {
       document.getElementById(modalId).classList.add('hidden');
     }
 
-    // Dynamic Toast Notification Trigger
-    function triggerToast(docName) {
-      const container = document.getElementById('toastContainer');
+    // ---------- View-only Privacy & Terms modal (no re-agreement needed) ----------
+    function openPrivacyModal() {
+      document.getElementById('privacyViewModal').classList.remove('hidden');
+    }
+    function closePrivacyModal() {
+      document.getElementById('privacyViewModal').classList.add('hidden');
+    }
+    function switchViewTab(tab) {
+      const privacyBtn = document.getElementById('vpTabPrivacyBtn');
+      const termsBtn = document.getElementById('vpTabTermsBtn');
+      const panelPrivacy = document.getElementById('vpPanelPrivacy');
+      const panelTerms = document.getElementById('vpPanelTerms');
 
-      // Create Toast Element
+      if (tab === 'privacy') {
+        panelPrivacy.classList.remove('hidden');
+        panelTerms.classList.add('hidden');
+        privacyBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
+        termsBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+      } else {
+        panelPrivacy.classList.add('hidden');
+        panelTerms.classList.remove('hidden');
+        termsBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
+        privacyBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+      }
+    }
+
+    // ---------- External links ----------
+    function openLink(url) {
+      if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    // ---------- Toasts ----------
+    function triggerDataNotice() {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-brand-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
+      toast.innerHTML = `
+        <div class="w-9 h-9 rounded-xl bg-brand-500/15 text-brand-600 dark:text-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-brand-500/30">
+          <i data-lucide="database" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-slate-900 dark:text-white leading-tight">We value your privacy</h5>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">We collect and process your personal data solely to deliver HR services to you, in line with our Privacy Policy.</p>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800">
+          <div class="progress-bar-slate h-full bg-gradient-to-r from-brand-500 to-brand-300"></div>
+        </div>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => dismissToast(toast), 8000);
+    }
+
+    function triggerAgreedToast() {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-emerald-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
+      toast.innerHTML = `
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-emerald-500/30">
+          <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-slate-900 dark:text-white leading-tight">Thanks — you're all set</h5>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">You've agreed to the Privacy Policy and Terms and Conditions.</p>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800">
+          <div class="progress-bar-emerald h-full bg-gradient-to-r from-emerald-500 to-emerald-300"></div>
+        </div>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => dismissToast(toast), 4000);
+    }
+
+    function triggerPartialAgreedToast(which) {
+      const label = which === 'privacy' ? 'Privacy Policy' : 'Terms and Conditions';
+      const remaining = which === 'privacy' ? 'Terms and Conditions' : 'Privacy Policy';
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-brand-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
+      toast.innerHTML = `
+        <div class="w-9 h-9 rounded-xl bg-brand-500/15 text-brand-600 dark:text-brand-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-brand-500/30">
+          <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-slate-900 dark:text-white leading-tight">${label} confirmed</h5>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Please also read and check the ${remaining} to continue.</p>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800">
+          <div class="progress-bar-emerald h-full bg-gradient-to-r from-brand-500 to-brand-300"></div>
+        </div>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => dismissToast(toast), 4000);
+    }
+
+    function triggerDownloadToast(docName) {
+      const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-purple-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
-
       toast.innerHTML = `
         <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-emerald-500/30">
           <i data-lucide="check-circle-2" class="w-5 h-5"></i>
@@ -736,24 +1473,48 @@
           <div class="progress-bar h-full bg-gradient-to-r from-purple-500 to-emerald-400"></div>
         </div>
       `;
-
       container.appendChild(toast);
       lucide.createIcons();
+      setTimeout(() => dismissToast(toast), 3500);
+    }
 
-      // Auto dismiss after 3.5s
-      setTimeout(() => {
-        dismissToast(toast);
-      }, 3500);
+    function triggerLockedToast() {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = 'toast-animate-in pointer-events-auto bg-white/95 dark:bg-slate-900/95 border border-amber-500/30 text-slate-900 dark:text-white p-4 rounded-2xl shadow-2xl backdrop-blur-md flex items-start gap-3 w-80 relative overflow-hidden ring-1 ring-slate-200 dark:ring-white/10';
+      toast.innerHTML = `
+        <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0 mt-0.5 ring-1 ring-amber-500/30">
+          <i data-lucide="lock" class="w-5 h-5"></i>
+        </div>
+        <div class="flex-1 min-w-0 pr-2">
+          <h5 class="text-xs font-bold text-slate-900 dark:text-white leading-tight">Please accept the Privacy Policy first</h5>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Review the Privacy Policy and Terms, then check the box and continue.</p>
+        </div>
+        <button onclick="dismissToast(this.parentElement)" class="text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+        <div class="absolute bottom-0 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800">
+          <div class="progress-bar-emerald h-full bg-gradient-to-r from-amber-500 to-amber-300"></div>
+        </div>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+      setTimeout(() => dismissToast(toast), 4000);
     }
 
     function dismissToast(toastElement) {
       if (!toastElement || toastElement.classList.contains('toast-animate-out')) return;
       toastElement.classList.remove('toast-animate-in');
       toastElement.classList.add('toast-animate-out');
-      setTimeout(() => {
-        toastElement.remove();
-      }, 300);
+      setTimeout(() => toastElement.remove(), 300);
     }
+
+    // Show the data-collection notice once on initial page load
+    window.addEventListener('load', () => {
+      setTimeout(triggerDataNotice, 600);
+      window.__termsNoticeShown = true;
+      updateActiveTab('privacy');
+    });
   </script>
 </body>
 </html>
