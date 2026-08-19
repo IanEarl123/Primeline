@@ -70,6 +70,26 @@
     @keyframes modalPop { 0% { opacity: 0; transform: scale(0.94) translateY(12px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
     .modal-animate { animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
+    /* On phones every modal slides up from the bottom instead of scaling in */
+    @keyframes modalSheetUp { 0% { opacity: 0; transform: translateY(48px); } 100% { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 640px) {
+      .modal-animate { animation: modalSheetUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    }
+
+    /* Little bounce for standalone icon badges (privacy/terms notices) */
+    @keyframes iconPop { 0% { opacity: 0; transform: scale(0.6); } 70% { transform: scale(1.08); } 100% { opacity: 1; transform: scale(1); } }
+    .icon-pop { animation: iconPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+    /* Consistent hover/tap feedback for buttons & links across the modals */
+    .btn-tap { transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+    .btn-tap:not(:disabled):hover { transform: translateY(-1px) scale(1.015); }
+    .btn-tap:not(:disabled):active { transform: scale(0.96); }
+
+    /* Smooth expand/collapse for policy & terms subsections inside the full-document viewer */
+    .accordion-content { max-height: 1200px; opacity: 1; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease; }
+    .accordion-content:not(.open) { max-height: 0; opacity: 0; }
+    .accordion-chevron { transition: transform 0.3s ease; }
+
     @keyframes toastIn { 0% { opacity: 0; transform: translateY(-20px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
     @keyframes toastOut { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-20px) scale(0.95); } }
     @keyframes progress { 0% { width: 100%; } 100% { width: 0%; } }
@@ -199,6 +219,110 @@
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="fixed top-5 right-5 z-[60] flex flex-col gap-3 pointer-events-none items-end"></div>
 
+  <!-- ============================================================ -->
+  <!-- ONBOARDING MODAL — Privacy Notice & Terms (auto-shown on first visit) -->
+  <!-- ============================================================ -->
+  <div id="onboardingModal" class="fixed inset-0 z-[55] bg-slate-900/60 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4 hidden" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+    <div class="modal-animate bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full sm:max-w-xl rounded-t-[2rem] sm:rounded-3xl shadow-2xl flex flex-col max-h-[92vh] overflow-hidden">
+
+      <!-- Mobile drag handle -->
+      <div class="sm:hidden flex items-center justify-center pt-3 pb-1 shrink-0">
+        <div class="w-10 h-1.5 rounded-full bg-slate-200 dark:bg-slate-700"></div>
+      </div>
+
+      <!-- Scrollable body -->
+      <div class="onboarding-body overflow-y-auto doc-scroll px-6 sm:px-7 pt-4 sm:pt-7 pb-2 space-y-5">
+
+        <div class="text-center space-y-2 pb-1">
+          <div class="flex items-center justify-center gap-3">
+          <div class="w-12 h-12 rounded-2xl bg-blue-900 text-white dark:text-brand-400 flex items-center justify-center mb-1 icon-pop">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div> 
+          <h3 class="text-xl font-extrabold text-blue-900 dark:text-blue-400">
+            Welcome to the HR Service Portal
+          </h3>
+          </div>
+          <h4 id="onboardingTitle" class="text-sm font-normal text-slate-900 dark:text-white leading-snug">Before accessing the portal, please review the following</h4>
+        </div>
+
+        <!-- Privacy summary card -->
+        <div class="flex gap-3.5">
+          <div class="w-10 h-10 shrink-0 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center ring-1 ring-brand-500/20">
+            <i data-lucide="lock" class="w-5 h-5"></i>
+          </div>
+          <div class="space-y-1.5 min-w-0">
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wide">Data Privacy Notice</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              Primeline Products Philippines, Inc. (“Primeline,” “we,” “us,” or “our”) affirms its commitment to uphold the fundamental right to privacy of its employees. This Privacy Policy establishes the standards and procedures by which Primeline collects, uses, stores, and protects personal data submitted through the HR Service Portal, in strict compliance with the Data Privacy Act of 2012 (Republic Act No. 10173), its Implementing Rules and Regulations (IRR), and issuances of the National Privacy Commission (NPC).
+            </p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+              The purpose of this Policy is to ensure that all personal data processed through the HR Service Portal are handled lawfully, fairly, and transparently. It seeks to safeguard employee information against unauthorized access, misuse, loss, alteration, or disclosure, while enabling Primeline to fulfill its legitimate human resource management functions
+            </p>
+            <!-- <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Only information necessary and relevant to your HR request should be submitted.</p> -->
+            <button onclick="openFullDoc('privacy')" class="btn-tap inline-flex items-center gap-1 text-sm font-bold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 hover:underline transition-all">
+              Read Full Privacy Notice <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-200 dark:border-slate-800"></div>
+
+        <!-- Terms summary card -->
+        <div class="flex gap-3.5">
+          <div class="w-10 h-10 shrink-0 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center ring-1 ring-orange-500/20">
+            <i data-lucide="scroll-text" class="w-5 h-5"></i>
+          </div>
+          <div class="space-y-1.5 min-w-0">
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wide">Terms and Conditions</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+             By accessing and using the Primeline HR Service Portal, you expressly acknowledge and agree to be bound by the terms and conditions set forth herein, which govern the lawful use of the system, the processing of personal data, and the responsibilities of both the company and its employees. These terms constitute a binding agreement between you and Primeline, and your continued use of the portal signifies your acceptance of all provisions, including those relating to data privacy, confidentiality, and compliance with applicable laws and regulations. If you do not agree with any part of these terms, or if you are unwilling to comply with the obligations imposed herein, you are advised to immediately discontinue use of the portal, as access and utilization are strictly conditioned upon full adherence to this Policy and the governing legal framework.
+            </p>
+            <button onclick="openFullDoc('terms')" class="btn-tap inline-flex items-center gap-1 text-sm font-bold text-brand-600 dark:text-brand-400 hover:text-brand-700 dark:hover:text-brand-300 hover:underline transition-all">
+              Read Full Terms and Conditions <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="border-t border-slate-200 dark:border-slate-800"></div>
+
+        <!-- Checkbox -->
+        <label for="onboardingAgreeCheckbox" class="flex items-start gap-3 cursor-pointer select-none bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 transition-colors hover:border-brand-300 dark:hover:border-brand-700">
+          <input type="checkbox" id="onboardingAgreeCheckbox" onchange="updateOnboardingButton()" class="mt-0.5 w-5 h-5 rounded-md border-2 border-slate-300 dark:border-slate-600 text-brand-600 focus:ring-brand-500 cursor-pointer accent-brand-600" />
+          <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+            I have read and understood the <span class="font-bold text-slate-900 dark:text-white">Privacy Notice</span> and <span class="font-bold text-slate-900 dark:text-white">Terms and Conditions</span>.
+          </span>
+        </label>
+
+        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed pb-1">
+          By selecting &ldquo;Agree &amp; Continue,&rdquo; I acknowledge that I have been informed about the processing of my personal information and agree to comply with the Terms and Conditions governing use of the HR Services Portal.
+        </p>
+      </div>
+
+      <!-- Declined state -->
+      <div id="onboardingDeclinedPanel" class="hidden px-6 sm:px-7 py-8 text-center space-y-4">
+        <div class="mx-auto w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center icon-pop">
+          <i data-lucide="shield-alert" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">You need to accept to continue</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto">Access to the HR Service Portal requires your agreement to our Privacy Notice and Terms and Conditions. You're welcome to review them again below.</p>
+        <button onclick="reviewOnboardingAgain()" class="btn-tap w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 transition-all">
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i> Review Policies Again
+        </button>
+      </div>
+
+      <!-- Sticky action buttons -->
+      <div id="onboardingActions" class="border-t border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-950/50 p-5 sm:p-6 flex flex-col sm:flex-row gap-3 shrink-0">
+        <button onclick="declineOnboarding()" class="btn-tap flex-1 inline-flex items-center justify-center gap-2 border-2 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-sm px-6 py-3.5 rounded-2xl transition-all">
+          Decline
+        </button>
+        <button id="onboardingAgreeBtn" disabled onclick="acceptOnboarding()" class="btn-tap flex-1 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-6 py-3.5 rounded-2xl cursor-not-allowed transition-all">
+          Agree &amp; Continue
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- Header / Navigation -->
   <header class="sticky top-0 z-40 border-b border-slate-200/90 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
@@ -220,7 +344,7 @@
           class="hidden sm:block h-7 sm:h-8 w-auto object-contain shrink-0"
         />
         <div>
-          <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">HR Service Portal</h1>
+          <h1 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">HR Service Portal - Employee Self Service</h1>
           <p class="text-xs sm:text-sm text-brand-900 dark:text-brand-300 font-bold tracking-wider uppercase">Primeline Products Philippines, Inc.</p>
         </div>
       </div>
@@ -232,8 +356,8 @@
         <button onclick="goTo('services')" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-sm transition-all">
           <i data-lucide="layout-grid" class="w-4 h-4"></i> Services
         </button>
-        <button onclick="openPrivacyModal()" id="navPrivacyBtn" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs transition-all">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Privacy &amp; Terms
+        <button onclick="openPrivacyModal()" id="navPrivacyBtn" title="Privacy Policy &amp; Terms" class="btn-tap inline-flex items-center gap-1.5 px-2.5 sm:px-3.5 py-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs transition-all">
+          <i data-lucide="shield-check" class="w-4 h-4 sm:w-3.5 sm:h-3.5"></i> <span class="hidden sm:inline">Privacy &amp; Terms</span>
         </button>
         <button id="themeToggle" onclick="toggleTheme()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 font-medium text-sm shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 hover:scale-105 active:scale-95 transition-all">
           <i id="themeIcon" data-lucide="moon" class="w-5 h-5 text-indigo-600"></i>
@@ -243,184 +367,6 @@
 
     </div>
   </header>
-
-  <!-- ============================================================ -->
-  <!-- SECTION 1: PRIVACY POLICY & TERMS (landing gate)             -->
-  <!-- ============================================================ -->
-  <section id="privacy" data-page="privacy" class="w-full">
-    <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col gap-10">
-
-      <div class="text-center space-y-2">
-        <span class="inline-flex items-center gap-2 bg-brand-100 dark:bg-slate-800 text-brand-700 dark:text-brand-400 text-xs font-bold uppercase tracking-widest px-4 py-1.5 rounded-full">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Legal
-        </span>
-        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">Privacy Policy &amp; Terms and Conditions</h2>
-        <p class="text-base text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Please read the following carefully before using the Primeline HR Service Portal.</p>
-      </div>
-
-      <!-- Tabs -->
-      <div class="flex items-center justify-center gap-3">
-        <button id="tabPrivacyBtn" onclick="switchTab('privacy')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all">
-          Privacy Policy
-        </button>
-        <button id="tabTermsBtn" onclick="switchTab('terms')" class="px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
-          Terms &amp; Conditions
-        </button>
-      </div>
-
-      <!-- Document Card -->
-      <section class="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-lg overflow-hidden">
-
-        <!-- Privacy Policy Panel -->
-        <div id="panelPrivacy" class="p-8 sm:p-10 space-y-6 doc-scroll max-h-[55vh] overflow-y-auto">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-brand-500/10 text-brand-600 dark:text-brand-400 flex items-center justify-center shrink-0">
-              <i data-lucide="lock" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Privacy Policy</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
-            </div>
-          </div>
-
-          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            <p>Primeline Products Philippines, Inc. ("Primeline," "we," "us," or "our") values the privacy of our employees. This Privacy Policy explains how we collect, use, store, and protect personal data submitted through the HR Service Portal, in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines.</p>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="database" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Information We Collect
-              </h4>
-              <p>When you use the portal, we may collect personal information such as your name, employee ID, position, department, contact details, and any information you provide when submitting requests, forms, or letters (e.g., certificates, benefits, or compensation requests).</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> How We Use Your Information
-              </h4>
-              <p>Your data is used solely to process HR-related requests, generate official documents, verify employment details, administer benefits, and improve the services offered through this portal. We do not sell or rent your personal information to third parties.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Legal Basis for Processing
-              </h4>
-              <p>Where applicable, we process personal information based on:<br>
-                • Your consent<br>
-                • Performance of a contract<br>
-                • Compliance with legal obligations<br>
-                • Our legitimate business interests<br>
-              </p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="share-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Sharing
-              </h4>
-              <p>Primeline does not sell personal information. Information may be shared internally with authorized HR personnel, and externally with government agencies (such as SSS, Pag-IBIG, and PhilHealth) only where required to process statutory benefits or as mandated by law.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="shield" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Retention &amp; Security
-              </h4>
-              <p>We retain personal data only for as long as necessary to: <br>
-                • fulfill the purposes stated in this policy or as required by law<br>
-                • We apply reasonable administrative, technical, and physical safeguards to protect it from unauthorized access, alteration, or disclosure.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="user-check" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Your Rights
-              </h4>
-              <p>You have the right to access, correct, or request deletion of your personal data, and to withdraw consent at any time, subject to legal and contractual restrictions. For concerns, please contact your HR department.</p>
-            </div>
-          </div>
-
-          <label for="agreePrivacyCheckbox" class="flex items-start gap-3 cursor-pointer select-none bg-brand-50/60 dark:bg-slate-800/60 border border-brand-100 dark:border-slate-700 rounded-2xl p-4 mt-2">
-            <input type="checkbox" id="agreePrivacyCheckbox" onchange="checkAgreements('privacy')" class="mt-0.5 w-5 h-5 rounded-md border-2 border-slate-300 dark:border-slate-600 text-brand-600 focus:ring-brand-500 cursor-pointer accent-brand-600" />
-            <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-              I have read and understood the <span class="font-bold text-slate-900 dark:text-white">Privacy Policy</span>.
-            </span>
-          </label>
-        </div>
-
-        <!-- Terms & Conditions Panel -->
-        <div id="panelTerms" class="p-8 sm:p-10 space-y-6 doc-scroll max-h-[55vh] overflow-y-auto hidden">
-          <div class="flex items-center gap-4">
-            <div class="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center shrink-0">
-              <i data-lucide="scroll-text" class="w-6 h-6"></i>
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-slate-900 dark:text-white">Terms and Conditions</h3>
-              <p class="text-xs text-slate-500 dark:text-slate-400">Last updated: August 2026</p>
-            </div>
-          </div>
-
-          <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            <p>By accessing and using the Primeline HR Service Portal, you agree to be bound by the following Terms and Conditions. If you do not agree with any part of these terms, please refrain from using the portal.</p>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="badge-check" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Acceptable Use
-              </h4>
-              <p>This portal is intended solely for legitimate HR-related transactions by authorized Primeline employees. Any misuse, falsification of information, or unauthorized access will be subject to disciplinary action under company policy.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="file-check-2" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Accuracy of Requests
-              </h4>
-              <p>You are responsible for ensuring that all information submitted through requests, forms, and letters is true, accurate, and complete. Primeline reserves the right to verify, delay, or deny requests containing inaccurate or incomplete information.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="cookie" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Data Collection &amp; Consent
-              </h4>
-              <p>By checking the agreement box below and continuing to use this portal, you acknowledge and consent that we collect, process, and store your personal and employment data as described in our Privacy Policy, for the purpose of delivering HR services to you.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="refresh-cw" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Changes to These Terms
-              </h4>
-              <p>Primeline may update these Terms and Conditions from time to time. Continued use of the portal after changes are posted constitutes your acceptance of the revised terms.</p>
-            </div>
-
-            <div>
-              <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="scale" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Governing Law
-              </h4>
-              <p>These Terms shall be governed by and construed in accordance with the laws of the Republic of the Philippines.</p>
-            </div>
-          </div>
-
-          <label for="agreeTermsCheckbox" class="flex items-start gap-3 cursor-pointer select-none bg-orange-50/60 dark:bg-slate-800/60 border border-orange-100 dark:border-slate-700 rounded-2xl p-4 mt-2">
-            <input type="checkbox" id="agreeTermsCheckbox" onchange="checkAgreements('terms')" class="mt-0.5 w-5 h-5 rounded-md border-2 border-slate-300 dark:border-slate-600 text-orange-600 focus:ring-orange-500 cursor-pointer accent-orange-600" />
-            <span class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-              I have read and understood the <span class="font-bold text-slate-900 dark:text-white">Terms and Conditions</span>, and I consent to the collection and processing of my personal data as described in the Privacy Policy.
-            </span>
-          </label>
-        </div>
-
-        <!-- Agreement Bar -->
-        <div class="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-5 justify-between">
-          <div class="flex items-center gap-3 text-sm">
-            <span id="privacyCheckStatus" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors">
-              <i data-lucide="circle" class="w-3.5 h-3.5"></i> Privacy Policy
-            </span>
-            <span id="termsCheckStatus" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors">
-              <i data-lucide="circle" class="w-3.5 h-3.5"></i> Terms &amp; Conditions
-            </span>
-          </div>
-          <button id="continueBtn" disabled onclick="unlockPortal()" class="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-7 py-3.5 rounded-2xl cursor-not-allowed transition-all">
-            Continue <i data-lucide="arrow-right" class="w-4 h-4"></i>
-          </button>
-        </div>
-      </section>
-
-    </main>
-  </section>
 
   <!-- ============================================================ -->
   <!-- SECTION 2: WELCOME (locked until Privacy is accepted)        -->
@@ -1020,7 +966,7 @@
       />
     </div>
     <div class="flex items-center justify-center font-semibold">
-      <button onclick="openPrivacyModal()" id="footerPrivacyBtn" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Privacy Policy &amp; Terms</button>
+      <button onclick="openPrivacyModal()" id="footerPrivacyBtn" class="btn-tap inline-flex items-center gap-1.5 hover:text-brand-600 dark:hover:text-brand-400 transition-colors"><i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Privacy Policy &amp; Terms</button>
     </div>
     <p>&copy; 2026 Primeline Products Philippines, Inc. All rights reserved.</p>
   </footer>
@@ -1069,31 +1015,31 @@
           </div>
 
           <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            <p>Primeline Products Philippines, Inc. ("Primeline," "we," "us," or "our") values the privacy of our employees. This Privacy Policy explains how we collect, use, store, and protect personal data submitted through the HR Service Portal, in accordance with the Data Privacy Act of 2012 (Republic Act No. 10173) of the Philippines.</p>
+            <p>Primeline Products Philippines, Inc. (“Primeline,” “we,” “us,” or “our”) affirms its commitment to uphold the fundamental right to privacy of its employees. This Privacy Policy establishes the standards and procedures by which Primeline collects, uses, stores, and protects personal data submitted through the HR Service Portal, in strict compliance with the Data Privacy Act of 2012 (Republic Act No. 10173), its Implementing Rules and Regulations (IRR), and issuances of the National Privacy Commission (NPC).
+            The purpose of this Policy is to ensure that all personal data processed through the HR Service Portal are handled lawfully, fairly, and transparently. It seeks to safeguard employee information against unauthorized access, misuse, loss, alteration, or disclosure, while enabling Primeline to fulfill its legitimate human resource management functions.
+            This Policy applies to all employees of Primeline who submit personal data through the HR Service Portal, as well as to HR personnel, system administrators, and authorized third party service providers who may process such data under our authority. It governs all stages of data processing, including collection, recording, organization, storage, updating, retrieval, consultation, use, sharing, and disposal.
+            Primeline implements organizational, physical, and technical security measures designed to protect personal data from risks of breach, unauthorized access, or unlawful processing. These measures include access controls, encryption, secure storage, audit trails, and regular compliance reviews. Employees are assured that their personal data will not be retained longer than necessary and will be securely disposed of once the purpose of processing has been achieved.
+</p>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="database" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Information We Collect
+                <i data-lucide="database" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Collection of Information
               </h4>
-              <p>When you use the portal, we may collect personal information such as your name, employee ID, position, department, contact details, and any information you provide when submitting requests, forms, or letters (e.g., certificates, benefits, or compensation requests).</p>
+              <p>When you access and utilize the HR Service Portal, We may collect and process personal information necessary for the administration of employment and related services, which may include but is not limited to your full name, employee identification number, job title or position, department or business unit, official contact details (such as email address and telephone number), and any additional information you voluntarily provide when submitting requests, forms, or letters through the system (including but not limited to applications for employment certificates, benefits enrollment, payroll or compensation adjustments, and other HR related documentation). All such personal data are collected for legitimate human resource management purposes, processed in accordance with the principles of transparency, proportionality, and lawful purpose under the Data Privacy Act of 2012, and safeguarded through appropriate organizational, physical, and technical measures to ensure confidentiality, integrity, and availability.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> How We Use Your Information
               </h4>
-              <p>Your data is used solely to process HR-related requests, generate official documents, verify employment details, administer benefits, and improve the services offered through this portal. We do not sell or rent your personal information to third parties.</p>
+              <p>All personal data collected through the HR Service Portal are used exclusively for legitimate human resource management purposes, which include but are not limited to the processing of HR related requests, the preparation and issuance of official employment documents, the verification of employment details, the administration of compensation, benefits, and entitlements, and the continuous improvement of HR services delivered through the portal. Primeline expressly affirms that such personal information shall never be sold, rented, or otherwise commercially exploited for the benefit of third parties, and shall only be disclosed to authorized personnel or service providers strictly on a need to know basis in accordance with lawful and contractual obligations. The use of employee data is governed by the principles of transparency, proportionality, and accountability under the Data Privacy Act of 2012, ensuring that all processing activities are limited to their intended HR functions and safeguarded by appropriate organizational, physical, and technical measures to preserve confidentiality, integrity, and availability.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Legal Basis for Processing
+                <i data-lucide="settings-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Legal Basis
               </h4>
-              <p>Where applicable, we process personal information based on:<br>
-                • Your consent<br>
-                • Performance of a contract<br>
-                • Compliance with legal obligations<br>
-                • Our legitimate business interests<br>
+              <p>Primeline’s data processing activities are firmly anchored on the core principles of legitimacy, proportionality, transparency, and accountability as mandated by the<strong> Data Privacy Act of 2012 (Republic Act No. 10173)</strong> and its Implementing Rules and Regulations. Personal data shall be collected and processed only when necessary, appropriate, and directly relevant to lawful human resource purposes, which include but are not limited to recruitment and hiring, employment administration, payroll and compensation management, statutory benefits processing, performance evaluation, compliance with labor and social legislation, and other legitimate business operations essential to the employer employee relationship. All processing activities are undertaken in good faith, with due regard to the rights of employees as data subjects and are strictly limited to what is necessary to achieve the intended HR objectives. Primeline ensures that such activities are carried out in a manner that is lawful, fair, and transparent, supported by organizational, physical, and technical safeguards designed to uphold accountability and protect employee information against unauthorized access, misuse, or disclosure.
               </p>
             </div>
 
@@ -1101,23 +1047,23 @@
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="share-2" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Sharing
               </h4>
-              <p>Primeline does not sell personal information. Information may be shared internally with authorized HR personnel, and externally with government agencies (such as SSS, Pag-IBIG, and PhilHealth) only where required to process statutory benefits or as mandated by law.</p>
+              <p>Primeline does not, under any circumstances, sell, rent, or commercially exploit personal information of its employees. Any data collected through the HR Service Portal shall be shared strictly on a controlled and limited basis, internally only with duly authorized HR personnel who require access to perform their official functions, and externally solely with government agencies such as the Social Security System (SSS), Home Development Mutual Fund (Pag IBIG), and Philippine Health Insurance Corporation (PhilHealth), but only to the extent necessary for the processing of statutory benefits, compliance with mandatory reporting obligations, or as expressly required by applicable laws and regulations. All disclosures are governed by the principles of necessity, proportionality, and lawful purpose under the Data Privacy Act of 2012, ensuring that employee information is released exclusively for legitimate purposes and safeguarded through appropriate contractual, organizational, and technical measures to prevent unauthorized use or disclosure.
+              Whenever personal data is shared with or processed by authorized third-party service providers, cloud vendors, or system administrators managing the HR Service Portal, Primeline guarantees that such transfers are governed by formal Outsourcing or Data Sharing Agreements. These agreements strictly bind the third party to implement identical or more stringent organizational, physical, and technical security measures as required by the Data Privacy Act of 2012.
+              </p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="shield" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Retention &amp; Security
               </h4>
-              <p>We retain personal data only for as long as necessary to: <br>
-                • fulfill the purposes stated in this policy or as required by law<br>
-                • We apply reasonable administrative, technical, and physical safeguards to protect it from unauthorized access, alteration, or disclosure.</p>
+              <p>Primeline retains personal data collected through the HR Service Portal for the duration of your employment and for a period of Three (3) years from your separation from the company to fulfill the specific purposes outlined in this Privacy Policy, including the administration of employment, processing of HR related requests, and compliance with statutory obligations, or for such longer period as may be expressly required under applicable laws and regulations. Once the lawful purpose of processing has been achieved, personal data shall be securely deleted, anonymized, or archived in a manner that prevents unauthorized access or further use. Throughout the retention period, Primeline applies a comprehensive framework of administrative, technical, and physical safeguards such as strict access controls, encryption, secure storage systems, and regular compliance reviews to protect employee information against risks of unauthorized access, alteration, disclosure, or destruction, thereby ensuring confidentiality, integrity, and availability in accordance with the principles of accountability and data minimization under the Data Privacy Act of 2012.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
-                <i data-lucide="user-check" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Your Rights
+                <i data-lucide="user-check" class="w-4 h-4 text-brand-600 dark:text-brand-400"></i> Data Subject Rights
               </h4>
-              <p>You have the right to access, correct, or request deletion of your personal data, and to withdraw consent at any time, subject to legal and contractual restrictions. For concerns, please contact your HR department.</p>
+              <p>Employees are entitled to exercise their rights as data subjects under the Data Privacy Act of 2012, which include the right to access their personal data, the right to request correction or rectification of any inaccurate or outdated information, the right to request deletion or blocking of data that is no longer necessary or unlawfully processed, and the right to withdraw previously granted consent to processing at any time, subject to applicable legal, regulatory, and contractual limitations. Primeline affirms its commitment to respect and facilitate the exercise of these rights through lawful and transparent procedures, ensuring that requests are addressed promptly and fairly. For any privacy related concerns, clarifications, or formal requests regarding the exercise of these rights, employees may directly contact their designated HR department or the Data Protection Officer, who shall provide appropriate guidance and assistance in accordance with company policy and regulatory requirements.</p>
             </div>
           </div>
 
@@ -1135,41 +1081,41 @@
           </div>
 
           <div class="space-y-5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-            <p>By accessing and using the Primeline HR Service Portal, you agree to be bound by the following Terms and Conditions. If you do not agree with any part of these terms, please refrain from using the portal.</p>
+            <p>By accessing and using the Primeline HR Service Portal, you expressly acknowledge and agree to be bound by the terms and conditions set forth herein, which govern the lawful use of the system, the processing of personal data, and the responsibilities of both the company and its employees. These terms constitute a binding agreement between you and Primeline, and your continued use of the portal signifies your acceptance of all provisions, including those relating to data privacy, confidentiality, and compliance with applicable laws and regulations. If you do not agree with any part of these terms, or if you are unwilling to comply with the obligations imposed herein, you are advised to immediately discontinue use of the portal, as access and utilization are strictly conditioned upon full adherence to this Policy and the governing legal framework.</p>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="badge-check" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Acceptable Use
               </h4>
-              <p>This portal is intended solely for legitimate HR-related transactions by authorized Primeline employees. Any misuse, falsification of information, or unauthorized access will be subject to disciplinary action under company policy.</p>
+              <p>The Primeline HR Service Portal shall be used exclusively for legitimate and authorized human resource–related transactions by duly recognized employees of the company. Any act of misuse, including but not limited to falsification or misrepresentation of information, unauthorized access or attempted access to restricted data, circumvention of security protocols, or utilization of the portal for purposes other than its intended HR functions, constitutes a violation of company policy and may subject the responsible employee to disciplinary measures ranging from administrative sanctions to termination, without prejudice to civil or criminal liability under applicable laws. All users are expected to exercise integrity, confidentiality, and accountability when using the portal, and Primeline reserves the right to monitor, audit, and investigate portal activity to ensure compliance with these acceptable use standards.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="file-check-2" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Accuracy of Requests
               </h4>
-              <p>You are responsible for ensuring that all information submitted through requests, forms, and letters is true, accurate, and complete. Primeline reserves the right to verify, delay, or deny requests containing inaccurate or incomplete information.</p>
+              <p>Employees are solely responsible for ensuring that all information submitted through the HR Service Portal—including requests, forms, and letters—is truthful, accurate, current, and complete at the time of submission. Any omission, misrepresentation, or falsification of data may compromise the integrity of HR processes and shall be deemed a violation of company policy. Primeline reserves the right, in the exercise of its legitimate business and compliance functions, to verify the authenticity and accuracy of all submitted information, and may lawfully delay, suspend, or deny the processing of requests found to contain incomplete, erroneous, or misleading details. Such measures are intended to protect both the employee and the company from administrative errors, fraudulent claims, or regulatory breaches, and are implemented in accordance with the principles of accountability and lawful purpose under the Data Privacy Act of 2012.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="cookie" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Data Collection &amp; Consent
               </h4>
-              <p>By checking the agreement box below and continuing to use this portal, you acknowledge and consent that we collect, process, and store your personal and employment data as described in our Privacy Policy, for the purpose of delivering HR services to you.</p>
+              <p>By checking the agreement box below and proceeding to access or use the Primeline HR Service Portal, you expressly acknowledge, consent, and agree that Primeline may lawfully collect, process, and store your personal and employment related data, including information submitted through requests, forms, and letters, strictly in accordance with the purposes and limitations set forth in this Privacy Policy. Such processing is undertaken solely to enable the delivery of legitimate HR services, including the administration of employment records, benefits, payroll, and other human resource functions, and is governed by the principles of transparency, proportionality, and accountability under the Data Privacy Act of 2012. Your continued use of the portal signifies your informed consent to these practices, subject to applicable legal and contractual restrictions, and affirms you’re understanding that all data handling activities are safeguarded through appropriate organizational, physical, and technical measures to protect confidentiality, integrity, and availability.</p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="refresh-cw" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Changes to These Terms
               </h4>
-              <p>Primeline may update these Terms and Conditions from time to time. Continued use of the portal after changes are posted constitutes your acceptance of the revised terms.</p>
+              <p>Primeline reserves the right to amend, revise, or update these Terms and Conditions at any time to reflect changes in company policies, operational requirements, regulatory mandates, or applicable laws. Any such modifications shall take effect immediately upon posting within the HR Service Portal, and employees are deemed to have constructive notice of these revisions once published. Your continued access to and use of the portal following the posting of updated terms shall constitute your full acknowledgment and acceptance of the revised provisions, including any new obligations or restrictions imposed therein. If you do not agree with the updated terms, you are advised to discontinue use of the portal, as ongoing utilization signifies your binding consent to be governed by the most current version of these Terms and Conditions. </p>
             </div>
 
             <div>
               <h4 class="font-bold text-slate-900 dark:text-white mb-1.5 flex items-center gap-2">
                 <i data-lucide="scale" class="w-4 h-4 text-orange-600 dark:text-orange-400"></i> Governing Law
               </h4>
-              <p>These Terms shall be governed by and construed in accordance with the laws of the Republic of the Philippines.</p>
+              <p>These Terms and Conditions shall be governed by, and construed strictly in accordance with, the laws of the Republic of the Philippines, including all applicable statutes, regulations, and jurisprudence. The rights and obligations of both Primeline and its employees arising from the use of the HR Service Portal shall be interpreted and enforced under Philippine law, without regard to conflict of law principles that might otherwise apply. Any dispute, claim, or controversy relating to the interpretation, validity, or enforcement of these Terms shall be resolved in accordance with the substantive and procedural laws of the Philippines, subject to the jurisdiction of the appropriate courts or arbitral tribunals therein, unless otherwise expressly provided by agreement or mandated by statute. This governing law provision ensures consistency, predictability, and compliance with the national legal framework, thereby safeguarding both the company and its employees under the rule of law.</p>
             </div>
           </div>
 
@@ -1218,70 +1164,37 @@
       lucide.createIcons();
     }
 
-    // ---------- Privacy tabs ----------
-    function switchTab(tab) {
-      const privacyBtn = document.getElementById('tabPrivacyBtn');
-      const termsBtn = document.getElementById('tabTermsBtn');
-      const panelPrivacy = document.getElementById('panelPrivacy');
-      const panelTerms = document.getElementById('panelTerms');
-
-      if (tab === 'privacy') {
-        panelPrivacy.classList.remove('hidden');
-        panelTerms.classList.add('hidden');
-        privacyBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all';
-        termsBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
-      } else {
-        panelPrivacy.classList.add('hidden');
-        panelTerms.classList.remove('hidden');
-        termsBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-brand-600 text-white shadow-md transition-all';
-        privacyBtn.className = 'px-5 py-2.5 rounded-xl font-bold text-sm bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
-
-        if (!window.__termsNoticeShown) {
-          window.__termsNoticeShown = true;
-          triggerDataNotice();
-        }
-      }
-    }
-
-    function checkAgreements(which) {
-      const privacyChecked = document.getElementById('agreePrivacyCheckbox').checked;
-      const termsChecked = document.getElementById('agreeTermsCheckbox').checked;
-      const continueBtn = document.getElementById('continueBtn');
-      const privacyStatus = document.getElementById('privacyCheckStatus');
-      const termsStatus = document.getElementById('termsCheckStatus');
-
-      updateCheckStatus(privacyStatus, privacyChecked, 'brand');
-      updateCheckStatus(termsStatus, termsChecked, 'orange');
-
-      if (privacyChecked && termsChecked) {
-        continueBtn.disabled = false;
-        continueBtn.className = 'w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-7 py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 hover:scale-105 active:scale-95 cursor-pointer transition-all';
-        triggerAgreedToast();
-      } else {
-        continueBtn.disabled = true;
-        continueBtn.className = 'w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-7 py-3.5 rounded-2xl cursor-not-allowed transition-all';
-        if ((which === 'privacy' && privacyChecked) || (which === 'terms' && termsChecked)) {
-          triggerPartialAgreedToast(which);
-        }
-      }
-    }
-
-    function updateCheckStatus(el, checked, color) {
-      if (checked) {
-        el.className = `inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-${color}-100 dark:bg-${color}-500/15 text-${color}-700 dark:text-${color}-400 font-semibold text-xs transition-colors`;
-        el.innerHTML = `<i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> ${el.textContent.trim()}`;
-      } else {
-        el.className = 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-semibold text-xs transition-colors';
-        el.innerHTML = `<i data-lucide="circle" class="w-3.5 h-3.5"></i> ${el.textContent.trim()}`;
-      }
+    // ---------- Onboarding modal (first-visit Privacy Notice & Terms gate) ----------
+    function showOnboardingModal() {
+      const modal = document.getElementById('onboardingModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
       lucide.createIcons();
     }
 
-    // ---------- Unlock the rest of the portal ----------
-    function unlockPortal() {
-      const privacyChecked = document.getElementById('agreePrivacyCheckbox').checked;
-      const termsChecked = document.getElementById('agreeTermsCheckbox').checked;
-      if (!privacyChecked || !termsChecked) return;
+    function hideOnboardingModal() {
+      const modal = document.getElementById('onboardingModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      if (portalUnlocked) document.body.style.overflow = '';
+    }
+
+    function updateOnboardingButton() {
+      const checked = document.getElementById('onboardingAgreeCheckbox').checked;
+      const btn = document.getElementById('onboardingAgreeBtn');
+      if (checked) {
+        btn.disabled = false;
+        btn.className = 'btn-tap flex-1 inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm px-6 py-3.5 rounded-2xl shadow-lg shadow-brand-600/20 cursor-pointer transition-all';
+      } else {
+        btn.disabled = true;
+        btn.className = 'btn-tap flex-1 inline-flex items-center justify-center gap-2 bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-bold text-sm px-6 py-3.5 rounded-2xl cursor-not-allowed transition-all';
+      }
+    }
+
+    function acceptOnboarding() {
+      const checked = document.getElementById('onboardingAgreeCheckbox').checked;
+      if (!checked) return;
       portalUnlocked = true;
 
       document.querySelectorAll('section[data-locked="true"]').forEach(sec => {
@@ -1289,18 +1202,42 @@
         sec.style.display = '';
       });
 
-      // Privacy gate has been accepted — remove it from view entirely.
-      // It only reappears if the page is refreshed.
-      const privacySection = document.getElementById('privacy');
-      if (privacySection) privacySection.style.display = 'none';
-
+      hideOnboardingModal();
+      triggerAgreedToast();
       goTo('welcome');
+    }
+
+    // Decline swaps the modal body for a friendly "you must accept" state — the
+    // portal stays locked, and the person can re-open the notices at any time.
+    function declineOnboarding() {
+      document.querySelector('#onboardingModal .onboarding-body').classList.add('hidden');
+      document.getElementById('onboardingActions').classList.add('hidden');
+      document.getElementById('onboardingDeclinedPanel').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function reviewOnboardingAgain() {
+      document.querySelector('#onboardingModal .onboarding-body').classList.remove('hidden');
+      document.getElementById('onboardingActions').classList.remove('hidden');
+      document.getElementById('onboardingDeclinedPanel').classList.add('hidden');
+    }
+
+    // "Read Full Privacy Notice" / "Read Full Terms and Conditions" — opens the
+    // complete document viewer on top, then smoothly hands control back to the
+    // onboarding modal once closed (if that's where the person came from).
+    let fullDocOpenedFromOnboarding = false;
+    function openFullDoc(tab) {
+      const onboarding = document.getElementById('onboardingModal');
+      fullDocOpenedFromOnboarding = !!onboarding && !onboarding.classList.contains('hidden');
+      if (fullDocOpenedFromOnboarding) onboarding.classList.add('hidden');
+      switchViewTab(tab);
+      openPrivacyModal();
     }
 
     // ---------- Section navigation ----------
     function goTo(sectionId) {
-      if (!portalUnlocked && sectionId !== 'privacy') {
-        goTo('privacy');
+      if (!portalUnlocked) {
+        showOnboardingModal();
         triggerLockedToast();
         return;
       }
@@ -1349,9 +1286,15 @@
     // ---------- View-only Privacy & Terms modal (no re-agreement needed) ----------
     function openPrivacyModal() {
       document.getElementById('privacyViewModal').classList.remove('hidden');
+      initPolicyAccordions();
+      lucide.createIcons();
     }
     function closePrivacyModal() {
       document.getElementById('privacyViewModal').classList.add('hidden');
+      if (fullDocOpenedFromOnboarding) {
+        fullDocOpenedFromOnboarding = false;
+        showOnboardingModal();
+      }
     }
     function switchViewTab(tab) {
       const privacyBtn = document.getElementById('vpTabPrivacyBtn');
@@ -1362,14 +1305,47 @@
       if (tab === 'privacy') {
         panelPrivacy.classList.remove('hidden');
         panelTerms.classList.add('hidden');
-        privacyBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
-        termsBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+        privacyBtn.className = 'btn-tap px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
+        termsBtn.className = 'btn-tap px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
       } else {
         panelPrivacy.classList.add('hidden');
         panelTerms.classList.remove('hidden');
-        termsBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
-        privacyBtn.className = 'px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
+        termsBtn.className = 'btn-tap px-4 py-2 rounded-xl font-bold text-xs bg-brand-600 text-white shadow-md transition-all';
+        privacyBtn.className = 'btn-tap px-4 py-2 rounded-xl font-bold text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all';
       }
+    }
+
+    // Turn each policy/terms subsection into a collapsible accordion item the
+    // first time the full-document viewer is opened (runs once).
+    let accordionsInitialized = false;
+    function initPolicyAccordions() {
+      if (accordionsInitialized) return;
+      accordionsInitialized = true;
+      document.querySelectorAll('#vpPanelPrivacy > div, #vpPanelTerms > div').forEach(div => {
+        const h4 = div.querySelector(':scope > h4');
+        const p = div.querySelector(':scope > p');
+        if (!h4 || !p) return;
+
+        h4.classList.add('flex', 'items-center', 'cursor-pointer', 'select-none');
+        h4.setAttribute('role', 'button');
+        h4.setAttribute('tabindex', '0');
+
+        const chevron = document.createElement('i');
+        chevron.setAttribute('data-lucide', 'chevron-down');
+        chevron.className = 'accordion-chevron w-4 h-4 ml-auto text-slate-400';
+        h4.appendChild(chevron);
+
+        p.classList.add('accordion-content', 'open');
+
+        const toggle = () => {
+          const isOpen = p.classList.toggle('open');
+          chevron.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(-90deg)';
+        };
+        h4.addEventListener('click', toggle);
+        h4.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+        });
+      });
     }
 
     // ---------- External links ----------
@@ -1509,11 +1485,10 @@
       setTimeout(() => toastElement.remove(), 300);
     }
 
-    // Show the data-collection notice once on initial page load
+    // Automatically surface the Privacy Notice & Terms modal on first visit
     window.addEventListener('load', () => {
-      setTimeout(triggerDataNotice, 600);
-      window.__termsNoticeShown = true;
-      updateActiveTab('privacy');
+      document.body.style.overflow = 'hidden';
+      setTimeout(showOnboardingModal, 500);
     });
   </script>
 </body>
