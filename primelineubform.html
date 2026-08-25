@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primeline Products Philippines Inc. — Payroll Authorization Form</title>
+<style>
+  :root{
+    --navy-950:#0e2438;
+    --navy-900:#122f4a;
+    --navy-800:#183d5e;
+    --navy-700:#1f4d75;
+    --navy-100:#e8eef3;
+    --navy-50:#f4f7fa;
+    --gold-500:#c79a3d;
+    --gold-600:#a97f2b;
+    --ink:#1c2733;
+    --ink-soft:#57677a;
+    --line:#dbe3ea;
+    --white:#ffffff;
+    --danger:#b3261e;
+    --danger-bg:#fdecea;
+    --ok-bg:#eaf4ee;
+    --ok-line:#bcdcc7;
+    --radius:10px;
+    --shadow:0 1px 2px rgba(14,36,56,.06), 0 8px 24px rgba(14,36,56,.06);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,'Inter',Roboto,Arial,sans-serif;
+    background:var(--navy-50);
+    color:var(--ink);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:0 0 64px;
+  }
+
+  /* Top identity bar */
+  .topbar{
+    width:100%;
+    background:linear-gradient(90deg,var(--navy-950),var(--navy-800));
+    border-bottom:3px solid var(--gold-500);
+    padding:22px 24px;
+  }
+  .topbar-inner{
+    max-width:760px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .mark{
+    width:42px;height:42px;flex:0 0 auto;border-radius:8px;
+    background:var(--gold-500);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:var(--navy-950);font-size:17px;letter-spacing:.5px;
+  }
+  .brand-text{color:var(--white);}
+  .brand-text .company{font-size:15px;font-weight:600;letter-spacing:.3px;opacity:.92;}
+  .brand-text .doc{font-size:12.5px;color:#c9d6e2;margin-top:1px;}
+
+  /* Header / hero band */
+  .hero{
+    width:100%;
+    background:var(--navy-900);
+    color:var(--white);
+    padding:34px 24px 40px;
+  }
+  .hero-inner{max-width:760px;margin:0 auto;}
+  .hero h1{
+    margin:0 0 8px;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:.2px;
+  }
+  .hero p{
+    margin:0;
+    color:#c9d6e2;
+    font-size:14.5px;
+    line-height:1.55;
+    max-width:640px;
+  }
+  .hero .amount{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:16px;
+    background:rgba(199,154,61,.14);
+    border:1px solid rgba(199,154,61,.4);
+    color:var(--gold-500);
+    font-weight:700;
+    font-size:13px;
+    padding:6px 12px;
+    border-radius:999px;
+  }
+
+  /* Form shell */
+  .sheet{
+    width:100%;
+    max-width:760px;
+    margin:-18px auto 0;
+    padding:0 24px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    position:relative;
+    z-index:2;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 28px;
+  }
+  .section-card .section-title{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin:0 0 4px;
+  }
+  .section-title .num{
+    font-size:12px;
+    font-weight:700;
+    color:var(--gold-600);
+    letter-spacing:.06em;
+  }
+  .section-title h2{
+    margin:0;
+    font-size:17px;
+    font-weight:700;
+    color:var(--navy-950);
+  }
+  .section-sub{
+    margin:2px 0 22px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+
+  .field{margin-bottom:22px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:block;
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:7px;
+  }
+  .field label .req{color:var(--danger); margin-left:2px;}
+  .hint{font-size:12.5px;color:var(--ink-soft);margin-top:6px;line-height:1.45;}
+  .err{font-size:12.5px;color:var(--danger);margin-top:6px;display:none;font-weight:600;}
+  .err.show{display:block;}
+
+  input[type="text"], input[type="email"]{
+    width:100%;
+    padding:12px 13px;
+    font-size:16px;
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    font-family:inherit;
+    color:var(--ink);
+    background:var(--white);
+    transition:border-color .15s, box-shadow .15s;
+  }
+  input[type="text"]:focus, input[type="email"]:focus{
+    outline:none;
+    border-color:var(--navy-700);
+    box-shadow:0 0 0 3px rgba(31,77,117,.14);
+  }
+  .field.invalid input{
+    border-color:var(--danger);
+  }
+  .field.invalid .err{display:block;}
+
+  /* Radio cards */
+  .radio-group{display:flex;flex-direction:column;gap:10px;}
+  .radio-card{
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:14px 15px;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    cursor:pointer;
+    transition:border-color .15s, background .15s;
+  }
+  .radio-card:hover{border-color:var(--navy-700);}
+  .radio-card input{margin-top:3px;flex:0 0 auto;width:17px;height:17px;accent-color:var(--navy-800);cursor:pointer;}
+  .radio-card .rc-text strong{display:block;font-size:14.5px;color:var(--ink);}
+  .radio-card .rc-text span{display:block;font-size:13px;color:var(--ink-soft);margin-top:2px;line-height:1.4;}
+  .radio-card.selected{
+    border-color:var(--navy-800);
+    background:var(--navy-50);
+  }
+  .radio-card.selected.is-no{
+    border-color:#8a8f97;
+    background:#f5f5f6;
+  }
+  .authorized-note{
+    display:none;
+    margin-top:10px;
+    padding:10px 13px;
+    background:var(--ok-bg);
+    border:1px solid var(--ok-line);
+    border-radius:8px;
+    font-size:12.5px;
+    color:#265c3a;
+    font-weight:600;
+  }
+  .authorized-note.show{display:block;}
+
+  /* Checkbox confirmation */
+  .confirm-box{
+    border:1.5px solid var(--line);
+    border-radius:8px;
+    padding:15px 16px;
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    cursor:pointer;
+    transition:border-color .15s, background .15s;
+  }
+  .confirm-box:hover{border-color:var(--navy-700);}
+  .confirm-box.checked{border-color:var(--navy-800);background:var(--navy-50);}
+  .confirm-box input{margin-top:2px;flex:0 0 auto;width:18px;height:18px;accent-color:var(--navy-800);cursor:pointer;}
+  .confirm-box span{font-size:13.5px;line-height:1.55;color:var(--ink);}
+  .confirm-box b{color:var(--navy-950);}
+
+  /* Submit bar */
+  .submit-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:6px 2px 2px;
+  }
+  .submit-hint{font-size:12.5px;color:var(--ink-soft);}
+  button.primary{
+    background:var(--navy-900);
+    color:var(--white);
+    border:none;
+    padding:13px 26px;
+    font-size:14.5px;
+    font-weight:700;
+    border-radius:8px;
+    cursor:pointer;
+    letter-spacing:.2px;
+    transition:background .15s, transform .05s;
+    flex:0 0 auto;
+  }
+  button.primary:hover{background:var(--navy-800);}
+  button.primary:active{transform:translateY(1px);}
+  button.primary:disabled{
+    background:#aab7c2;
+    cursor:not-allowed;
+  }
+  button.ghost{
+    background:transparent;
+    color:var(--ink-soft);
+    border:1.5px solid var(--line);
+    padding:12px 22px;
+    font-size:14px;
+    font-weight:600;
+    border-radius:8px;
+    cursor:pointer;
+  }
+  button.ghost:hover{border-color:var(--navy-700);color:var(--navy-900);}
+
+  .footer-note{
+    text-align:center;
+    font-size:12px;
+    color:#8698a8;
+    margin-top:4px;
+    line-height:1.6;
+  }
+
+  body.modal-open{overflow:hidden;}
+
+  /* Modal */
+  .modal-overlay{
+    position:fixed;inset:0;
+    background:rgba(14,24,36,.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:50;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .2s ease, visibility .2s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .modal-overlay.show{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .modal{
+    background:var(--white);
+    border-radius:14px;
+    max-width:480px;
+    width:100%;
+    max-height:88vh;
+    overflow:auto;
+    -webkit-overflow-scrolling:touch;
+    box-shadow:0 20px 60px rgba(14,24,36,.35);
+    transform:translateY(14px) scale(.97);
+    opacity:0;
+    transition:transform .22s cubic-bezier(.2,.8,.2,1), opacity .18s ease;
+  }
+  .modal-overlay.show .modal{
+    transform:translateY(0) scale(1);
+    opacity:1;
+  }
+  .modal-head{
+    padding:20px 24px 14px;
+    border-bottom:1px solid var(--line);
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+  }
+  .modal-head .ico{
+    width:34px;height:34px;flex:0 0 auto;border-radius:8px;
+    background:var(--navy-50);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--navy-800);font-weight:800;font-size:15px;
+  }
+  .modal-head h3{margin:0;font-size:16px;color:var(--navy-950);font-weight:700;}
+  .modal-head p{margin:3px 0 0;font-size:12.5px;color:var(--ink-soft);}
+  .modal-body{padding:18px 24px;font-size:13.5px;line-height:1.65;color:var(--ink);}
+  .modal-body p{margin:0 0 12px;}
+  .modal-body ol{margin:0;padding-left:20px;}
+  .modal-body ol li{margin-bottom:9px;}
+  .modal-body ol li:last-child{margin-bottom:0;}
+  .modal-actions{
+    padding:16px 24px 22px;
+    display:flex;
+    gap:10px;
+    justify-content:flex-end;
+    border-top:1px solid var(--line);
+  }
+
+  /* Success state */
+  .success-card{
+    text-align:center;
+    padding:44px 30px 40px;
+  }
+  .success-mark{
+    width:56px;height:56px;border-radius:50%;
+    background:var(--ok-bg);
+    border:1.5px solid var(--ok-line);
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 18px;
+    color:#2c7a4b;font-size:26px;font-weight:800;
+  }
+  .success-card h2{margin:0 0 8px;font-size:20px;color:var(--navy-950);}
+  .success-card p{margin:0 auto 4px;font-size:14px;color:var(--ink-soft);max-width:420px;line-height:1.6;}
+  .receipt{
+    margin:22px auto 0;
+    max-width:420px;
+    text-align:left;
+    background:var(--navy-50);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:16px 18px;
+    font-size:13px;
+  }
+  .receipt div{display:flex;justify-content:space-between;padding:5px 0;gap:12px;}
+  .receipt div span:first-child{color:var(--ink-soft);}
+  .receipt div span:last-child{font-weight:600;color:var(--ink);text-align:right;}
+
+  @media (max-width:520px){
+    .hero h1{font-size:22px;}
+    .card{padding:20px 18px 22px;}
+    .submit-bar{flex-direction:column;align-items:stretch;}
+    .submit-bar button{width:100%;}
+
+    .modal-overlay{padding:0;align-items:flex-end;}
+    .modal{
+      max-width:100%;
+      max-height:92vh;
+      border-radius:16px 16px 0 0;
+      transform:translateY(100%);
+    }
+    .modal-overlay.show .modal{transform:translateY(0);}
+    .modal-head{padding:18px 18px 12px;}
+    .modal-body{padding:14px 18px;}
+    .modal-actions{
+      padding:14px 18px 20px;
+      flex-direction:column-reverse;
+      gap:8px;
+    }
+    .modal-actions button{width:100%;}
+    button.primary, button.ghost{padding:13px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="mark">PP</div>
+    <div class="brand-text">
+      <div class="company">PRIMELINE PRODUCTS PHILIPPINES INC.</div>
+      <div class="doc">Human Resources &amp; Payroll Department</div>
+    </div>
+  </div>
+</div>
+
+<!-- Intro Notice Modal — shown before the form is accessible -->
+<div class="modal-overlay show" id="introModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="ico">i</div>
+      <div>
+        <h3>Before You Begin</h3>
+        <p>Please read this notice</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p>The Company has previously communicated and reminded employees of the required transition to the designated UnionBank payroll account.</p>
+      <p>Employees who have not completed the required transition may result in the Company incurring an actual ₱35.00 bank processing fee in connection with payroll processing.</p>
+      <p>By completing and submitting this form, you are being asked to provide your electronic authorization for the Company to recover the actual ₱35 bank processing fee through payroll deduction.</p>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="primary" id="introContinue">I Understand, Continue</button>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Payroll Bank Processing Fee Authorization</h1>
+    <p>This form records your employee details and your authorization for the actual bank processing fee incurred because your salary account has not yet transitioned to the designated UnionBank payroll account.</p>
+    <div class="amount">₱35.00 — actual bank processing fee</div>
+  </div>
+</div>
+
+<form class="sheet" id="authForm" novalidate>
+
+  <!-- EMPLOYEE INFORMATION -->
+  <div class="card section-card">
+    <div class="section-title"><span class="num">SECTION 1</span><h2>Employee Information</h2></div>
+    <p class="section-sub">Please provide your details exactly as they appear in company records.</p>
+
+    <div class="field" id="f-name">
+      <label for="fullName">Full Name<span class="req">*</span></label>
+      <input type="text" id="fullName" name="fullName" placeholder="e.g.  Ian Earl B. Rivera" autocomplete="name">
+      <div class="err">Please enter your full name.</div>
+    </div>
+
+    <div class="field" id="f-empno">
+      <label for="empNumber">Employee Number<span class="req">*</span></label>
+      <input type="text" id="empNumber" name="empNumber" placeholder="e.g. 000123" inputmode="numeric" maxlength="10">
+      <div class="hint">Format: numbers only, 4–10 digits, as shown on your company ID / payslip.</div>
+      <div class="err">Enter a valid employee number (4–10 digits, numbers only).</div>
+    </div>
+
+    <div class="field" id="f-store">
+      <label for="storeBranch">Store / Branch<span class="req">*</span></label>
+      <input type="text" id="storeBranch" name="storeBranch" placeholder="e.g. SM Megamall Branch">
+      <div class="err">Please enter your store or branch.</div>
+    </div>
+
+    <div class="field" id="f-position">
+      <label for="position">Position<span class="req">*</span></label>
+      <input type="text" id="position" name="position" placeholder="e.g. Sales Associate">
+      <div class="err">Please enter your position.</div>
+    </div>
+
+    <div class="field" id="f-email">
+      <label for="companyEmail">Company Email Address<span class="req">*</span></label>
+      <input type="email" id="companyEmail" name="companyEmail" placeholder="[email protected]" autocomplete="email">
+      <div class="err">Enter a valid email address.</div>
+    </div>
+  </div>
+
+  <!-- AUTHORIZATION -->
+  <div class="card section-card">
+    <div class="section-title"><span class="num">SECTION 2</span><h2>Authorization</h2></div>
+    <p class="section-sub">Select one option below regarding the ₱35.00 bank processing fee deduction.</p>
+
+    <div class="field" id="f-auth" style="margin-bottom:0;">
+      <div class="radio-group">
+        <label class="radio-card" id="cardYes">
+          <input type="radio" name="authorization" value="yes" id="authYes">
+          <span class="rc-text">
+            <strong>YES — I Authorize the ₱35.00 deduction</strong>
+            <span>I agree to the terms of the bank processing fee deduction described in this form.</span>
+          </span>
+        </label>
+        <label class="radio-card" id="cardNo">
+          <input type="radio" name="authorization" value="no" id="authNo">
+          <span class="rc-text">
+            <strong>NO — I do not authorize the ₱35.00 deduction</strong>
+            <span>I do not agree to the bank processing fee deduction at this time.</span>
+          </span>
+        </label>
+      </div>
+      <div class="authorized-note" id="authorizedNote">✓ Notice reviewed and acknowledged.</div>
+      <div class="err" id="authErr">Please select an authorization option.</div>
+    </div>
+  </div>
+
+  <!-- ELECTRONIC CONFIRMATION -->
+  <div class="card section-card">
+    <div class="section-title"><span class="num">SECTION 3</span><h2>Electronic Confirmation</h2></div>
+    <p class="section-sub">Confirm your submission below.</p>
+
+    <label class="confirm-box" id="confirmBox">
+      <input type="checkbox" id="confirmCheck">
+      <span>I confirm that I am the employee identified in this form, that I have read and understood the authorization above, and that my submission of this form constitutes my electronic authorization for the stated <b>₱35 bank processing fee deduction</b>.</span>
+    </label>
+    <div class="err" id="confirmErr" style="margin-top:8px;">This confirmation is required to submit the form.</div>
+  </div>
+
+  <div class="submit-bar">
+    <div class="submit-hint">Please review your entries before submitting.</div>
+    <button type="submit" class="primary" id="submitBtn">Submit Form</button>
+  </div>
+
+  <div class="footer-note">Primeline Products Philippines Inc. · This is an internal HR/Payroll authorization form.<br>Your response will be recorded with the applicable submission date and time.</div>
+</form>
+
+<!-- Success screen (hidden until submit) -->
+<div class="sheet" id="successView" style="display:none;">
+  <div class="card success-card">
+    <div class="success-mark">✓</div>
+    <h2>Authorization Submitted</h2>
+    <p>Thank you. Your response has been recorded. A copy of the reference details is shown below for your records.</p>
+    <div class="receipt" id="receiptBox"></div>
+    <button type="button" class="ghost" id="submitAnotherBtn" style="margin-top:24px;">Submit another response</button>
+  </div>
+</div>
+
+<!-- YES Authorization Notice Modal -->
+<div class="modal-overlay" id="yesModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="ico">₱</div>
+      <div>
+        <h3>Bank Processing Fee Notice</h3>
+        <p>Please read before confirming your authorization</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p>I have read and understood the above notice. I acknowledge that the Company may incur an actual ₱35.00 bank processing fee because I have not completed the required transition to the designated UnionBank payroll account.</p>
+      <p>I hereby voluntarily authorize the Company to deduct the actual ₱35.00 bank processing fee from my salary, subject to applicable law and Company policy.</p>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="ghost" id="yesDecline">Cancel</button>
+      <button type="button" class="primary" id="yesAccept">I Acknowledge &amp; Authorize</button>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Confirmation Modal -->
+<div class="modal-overlay" id="submitModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="ico">!</div>
+      <div>
+        <h3>Confirm Your Submission</h3>
+        <p>By submitting this form, I understand that:</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <ol>
+        <li>The authorization is limited to the actual ₱35.00 bank processing fee stated above.</li>
+        <li>No additional penalty, markup, or administrative charge is authorized by this form.</li>
+        <li>The Company will retain this electronic submission as a record of my authorization.</li>
+        <li>My response will be recorded with the applicable submission date and time.</li>
+      </ol>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="ghost" id="submitCancel">Go Back</button>
+      <button type="button" class="primary" id="submitConfirm">Confirm &amp; Submit</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // ---- CONFIG ----
+  // Paste your Google Apps Script Web App URL here (ends in /exec).
+  // See apps-script-code.gs for the script to deploy on your Google Sheet.
+  const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzX814h-dsT2FAbx6vVZaPFSxaO1-S28jmKSDt-1jnFRPoreKYsDvPT3ZH2iktsoIr1/exec';
+  // ----------------
+
+  const form = document.getElementById('authForm');
+  const cardYes = document.getElementById('cardYes');
+  const cardNo = document.getElementById('cardNo');
+  const authYes = document.getElementById('authYes');
+  const authNo = document.getElementById('authNo');
+  const yesModal = document.getElementById('yesModal');
+  const yesAccept = document.getElementById('yesAccept');
+  const yesDecline = document.getElementById('yesDecline');
+  const authorizedNote = document.getElementById('authorizedNote');
+  const confirmBox = document.getElementById('confirmBox');
+  const confirmCheck = document.getElementById('confirmCheck');
+  const submitModal = document.getElementById('submitModal');
+  const submitCancel = document.getElementById('submitCancel');
+  const submitConfirm = document.getElementById('submitConfirm');
+
+  let yesAcknowledged = false;
+
+  function openModal(el){ el.classList.add('show'); document.body.classList.add('modal-open'); }
+  function closeModal(el){
+    el.classList.remove('show');
+    // Only unlock scroll if no other modal is currently open
+    const anyOpen = document.querySelector('.modal-overlay.show');
+    if(!anyOpen) document.body.classList.remove('modal-open');
+  }
+
+  // Intro notice modal — must be dismissed before interacting with the form
+  const introModal = document.getElementById('introModal');
+  document.body.classList.add('modal-open');
+  document.getElementById('introContinue').addEventListener('click', function(){
+    closeModal(introModal);
+  });
+
+  // Clicking YES card opens the notice modal instead of immediately selecting it
+  cardYes.addEventListener('click', function(e){
+    e.preventDefault();
+    if(yesAcknowledged){
+      authYes.checked = true;
+      updateAuthSelection();
+      return;
+    }
+    openModal(yesModal);
+  });
+
+  cardNo.addEventListener('click', function(e){
+    e.preventDefault();
+    authNo.checked = true;
+    yesAcknowledged = false;
+    authorizedNote.classList.remove('show');
+    updateAuthSelection();
+  });
+
+  yesAccept.addEventListener('click', function(){
+    yesAcknowledged = true;
+    authYes.checked = true;
+    authorizedNote.classList.add('show');
+    updateAuthSelection();
+    closeModal(yesModal);
+    document.getElementById('f-auth').classList.remove('invalid');
+    document.getElementById('authErr').classList.remove('show');
+  });
+
+  yesDecline.addEventListener('click', function(){
+    closeModal(yesModal);
+    // leave selection as-is (unselected) since they declined to acknowledge
+  });
+
+  function updateAuthSelection(){
+    cardYes.classList.toggle('selected', authYes.checked);
+    cardNo.classList.toggle('selected', authNo.checked);
+    cardNo.classList.toggle('is-no', authNo.checked);
+    if(authNo.checked) authorizedNote.classList.remove('show');
+  }
+
+  // Confirmation checkbox styling
+  confirmCheck.addEventListener('change', function(){
+    confirmBox.classList.toggle('checked', confirmCheck.checked);
+    if(confirmCheck.checked){
+      document.getElementById('confirmErr').classList.remove('show');
+    }
+  });
+
+  // Field validation helpers
+  function setInvalid(fieldId, invalid){
+    const f = document.getElementById(fieldId);
+    f.classList.toggle('invalid', invalid);
+  }
+
+  function validEmpNumber(v){ return /^[0-9]{4,10}$/.test(v.trim()); }
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
+
+  function validateForm(){
+    let ok = true;
+
+    const fullName = document.getElementById('fullName').value.trim();
+    if(!fullName){ setInvalid('f-name', true); ok = false; } else setInvalid('f-name', false);
+
+    const empNumber = document.getElementById('empNumber').value.trim();
+    if(!validEmpNumber(empNumber)){ setInvalid('f-empno', true); ok = false; } else setInvalid('f-empno', false);
+
+    const storeBranch = document.getElementById('storeBranch').value.trim();
+    if(!storeBranch){ setInvalid('f-store', true); ok = false; } else setInvalid('f-store', false);
+
+    const position = document.getElementById('position').value.trim();
+    if(!position){ setInvalid('f-position', true); ok = false; } else setInvalid('f-position', false);
+
+    const email = document.getElementById('companyEmail').value.trim();
+    if(!validEmail(email)){ setInvalid('f-email', true); ok = false; } else setInvalid('f-email', false);
+
+    const authChosen = authYes.checked || authNo.checked;
+    const authField = document.getElementById('f-auth');
+    const authErr = document.getElementById('authErr');
+    if(!authChosen || (authYes.checked && !yesAcknowledged)){
+      authField.classList.add('invalid');
+      authErr.classList.add('show');
+      ok = false;
+    } else {
+      authField.classList.remove('invalid');
+      authErr.classList.remove('show');
+    }
+
+    const confirmErr = document.getElementById('confirmErr');
+    if(!confirmCheck.checked){
+      confirmErr.classList.add('show');
+      ok = false;
+    } else {
+      confirmErr.classList.remove('show');
+    }
+
+    return ok;
+  }
+
+  // live-clear errors as user types
+  ['fullName','empNumber','storeBranch','position','companyEmail'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', function(){
+      validateForm();
+    });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!validateForm()) return;
+    openModal(submitModal);
+  });
+
+  submitCancel.addEventListener('click', function(){
+    closeModal(submitModal);
+  });
+
+  submitConfirm.addEventListener('click', function(){
+    closeModal(submitModal);
+    finalizeSubmission();
+  });
+
+  function finalizeSubmission(){
+    const fullName = document.getElementById('fullName').value.trim();
+    const empNumber = document.getElementById('empNumber').value.trim();
+    const storeBranch = document.getElementById('storeBranch').value.trim();
+    const position = document.getElementById('position').value.trim();
+    const email = document.getElementById('companyEmail').value.trim();
+    const authValue = authYes.checked ? 'YES - Authorized (Php 35.00)' : 'NO - Not Authorized';
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
+    const timeStr = now.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
+
+    // Show a submitting state on the button while we send data to the sheet
+    submitConfirmDisabled(true);
+
+    const payload = new URLSearchParams({
+      fullName: fullName,
+      empNumber: empNumber,
+      storeBranch: storeBranch,
+      position: position,
+      companyEmail: email,
+      authorization: authValue,
+      confirmed: 'Yes'
+    });
+
+    function showReceipt(){
+      const receipt = document.getElementById('receiptBox');
+      receipt.innerHTML =
+        '<div><span>Full Name</span><span>' + escapeHtml(fullName) + '</span></div>' +
+        '<div><span>Employee Number</span><span>' + escapeHtml(empNumber) + '</span></div>' +
+        '<div><span>Store / Branch</span><span>' + escapeHtml(storeBranch) + '</span></div>' +
+        '<div><span>Position</span><span>' + escapeHtml(position) + '</span></div>' +
+        '<div><span>Company Email</span><span>' + escapeHtml(email) + '</span></div>' +
+        '<div><span>Authorization</span><span>' + escapeHtml(authValue.replace('Php','₱')) + '</span></div>' +
+        '<div><span>Date Submitted</span><span>' + dateStr + '</span></div>' +
+        '<div><span>Time Submitted</span><span>' + timeStr + '</span></div>';
+
+      document.getElementById('authForm').style.display = 'none';
+      document.getElementById('successView').style.display = 'flex';
+    }
+
+    if(!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL.indexOf('PASTE_YOUR') === 0){
+      // No endpoint configured yet — just show the receipt locally.
+      submitConfirmDisabled(false);
+      showReceipt();
+      return;
+    }
+
+    // Apps Script web apps don't return readable CORS responses in no-cors mode,
+    // so we fire the request and treat successful delivery (no network error) as success.
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: payload.toString()
+    })
+    .then(function(){
+      submitConfirmDisabled(false);
+      showReceipt();
+    })
+    .catch(function(){
+      submitConfirmDisabled(false);
+      alert('There was a problem submitting your response. Please check your internet connection and try again.');
+    });
+  }
+
+  function submitConfirmDisabled(isSubmitting){
+    submitConfirm.disabled = isSubmitting;
+    submitConfirm.textContent = isSubmitting ? 'Submitting…' : 'Confirm & Submit';
+  }
+
+  document.getElementById('submitAnotherBtn').addEventListener('click', function(){
+    resetForm();
+  });
+
+  function resetForm(){
+    // Clear text/email fields
+    ['fullName','empNumber','storeBranch','position','companyEmail'].forEach(function(id){
+      const el = document.getElementById(id);
+      el.value = '';
+    });
+
+    // Clear validation states
+    ['f-name','f-empno','f-store','f-position','f-email','f-auth'].forEach(function(id){
+      document.getElementById(id).classList.remove('invalid');
+    });
+    document.getElementById('authErr').classList.remove('show');
+    document.getElementById('confirmErr').classList.remove('show');
+
+    // Reset authorization selection
+    authYes.checked = false;
+    authNo.checked = false;
+    yesAcknowledged = false;
+    authorizedNote.classList.remove('show');
+    updateAuthSelection();
+
+    // Reset confirmation checkbox
+    confirmCheck.checked = false;
+    confirmBox.classList.remove('checked');
+
+    // Reset submit button state
+    submitConfirmDisabled(false);
+
+    // Swap views back to the form
+    document.getElementById('successView').style.display = 'none';
+    document.getElementById('authForm').style.display = 'flex';
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
