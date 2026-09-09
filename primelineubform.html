@@ -425,8 +425,8 @@
     </div>
     <div class="modal-body">
       <p>The Company has previously communicated and reminded employees of the required transition to the designated UnionBank payroll account.</p>
-      <p>Employees who have not completed the required transition may result in the Company incurring an actual ₱35.00 bank processing fee in connection with payroll processing.</p>
-      <p>By completing and submitting this form, you are being asked to provide your electronic authorization for the Company to recover the actual ₱35 bank processing fee through payroll deduction.</p>
+      <p>Employees who have not completed the required transition may result in the Company incurring an actual ₱25.00 bank processing fee in connection with payroll processing.</p>
+      <p>By completing and submitting this form, you are being asked to provide your electronic authorization for the Company to recover the actual ₱25 bank processing fee through payroll deduction.</p>
     </div>
     <div class="modal-actions">
       <button type="button" class="primary" id="introContinue">I Understand, Continue</button>
@@ -438,7 +438,7 @@
   <div class="hero-inner">
     <h1>Payroll Bank Processing Fee Authorization</h1>
     <p>This form records your employee details and your authorization for the actual bank processing fee incurred because your salary account has not yet transitioned to the designated UnionBank payroll account.</p>
-    <div class="amount">₱35.00 — actual bank processing fee</div>
+    <div class="amount">₱25.00 — actual bank processing fee</div>
   </div>
 </div>
 
@@ -484,21 +484,21 @@
   <!-- AUTHORIZATION -->
   <div class="card section-card">
     <div class="section-title"><span class="num">SECTION 2</span><h2>Authorization</h2></div>
-    <p class="section-sub">Select one option below regarding the ₱35.00 bank processing fee deduction.</p>
+    <p class="section-sub">Select one option below regarding the ₱25.00 bank processing fee deduction.</p>
 
     <div class="field" id="f-auth" style="margin-bottom:0;">
       <div class="radio-group">
         <label class="radio-card" id="cardYes">
           <input type="radio" name="authorization" value="yes" id="authYes">
           <span class="rc-text">
-            <strong>YES — I Authorize the ₱35.00 deduction</strong>
+            <strong>YES — I Authorize the ₱25.00 deduction</strong>
             <span>I agree to the terms of the bank processing fee deduction described in this form.</span>
           </span>
         </label>
         <label class="radio-card" id="cardNo">
           <input type="radio" name="authorization" value="no" id="authNo">
           <span class="rc-text">
-            <strong>NO — I do not authorize the ₱35.00 deduction</strong>
+            <strong>NO — I do not authorize the ₱25.00 deduction</strong>
             <span>I do not agree to the bank processing fee deduction at this time.</span>
           </span>
         </label>
@@ -515,7 +515,7 @@
 
     <label class="confirm-box" id="confirmBox">
       <input type="checkbox" id="confirmCheck">
-      <span>I confirm that I am the employee identified in this form, that I have read and understood the authorization above, and that my submission of this form constitutes my electronic authorization for the stated <b>₱35 bank processing fee deduction</b>.</span>
+      <span>I confirm that I am the employee identified in this form, that I have read and understood the authorization above, and that my submission of this form constitutes my electronic authorization for the stated <b>₱25 bank processing fee deduction</b>.</span>
     </label>
     <div class="err" id="confirmErr" style="margin-top:8px;">This confirmation is required to submit the form.</div>
   </div>
@@ -550,8 +550,8 @@
       </div>
     </div>
     <div class="modal-body">
-      <p>I have read and understood the above notice. I acknowledge that the Company may incur an actual ₱35.00 bank processing fee because I have not completed the required transition to the designated UnionBank payroll account.</p>
-      <p>I hereby voluntarily authorize the Company to deduct the actual ₱35.00 bank processing fee from my salary, subject to applicable law and Company policy.</p>
+      <p>I have read and understood the above notice. I acknowledge that the Company may incur an actual ₱25.00 bank processing fee because I have not completed the required transition to the designated UnionBank payroll account.</p>
+      <p>I hereby voluntarily authorize the Company to deduct the actual ₱25.00 bank processing fee from my salary, subject to applicable law and Company policy.</p>
     </div>
     <div class="modal-actions">
       <button type="button" class="ghost" id="yesDecline">Cancel</button>
@@ -572,7 +572,7 @@
     </div>
     <div class="modal-body">
       <ol>
-        <li>The authorization is limited to the actual ₱35.00 bank processing fee stated above.</li>
+        <li>The authorization is limited to the actual ₱25.00 bank processing fee stated above.</li>
         <li>No additional penalty, markup, or administrative charge is authorized by this form.</li>
         <li>The Company will retain this electronic submission as a record of my authorization.</li>
         <li>My response will be recorded with the applicable submission date and time.</li>
@@ -752,7 +752,7 @@
     const storeBranch = document.getElementById('storeBranch').value.trim();
     const position = document.getElementById('position').value.trim();
     const email = document.getElementById('companyEmail').value.trim();
-    const authValue = authYes.checked ? 'YES - Authorized (Php 35.00)' : 'NO - Not Authorized';
+    const authValue = authYes.checked ? 'YES - Authorized (Php 25.00)' : 'NO - Not Authorized';
     const now = new Date();
     const dateStr = now.toLocaleDateString('en-PH', { year:'numeric', month:'long', day:'numeric' });
     const timeStr = now.toLocaleTimeString('en-PH', { hour:'2-digit', minute:'2-digit', second:'2-digit' });
